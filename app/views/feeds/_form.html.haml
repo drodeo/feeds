@@ -1,0 +1,14 @@
+= simple_form_for(@feed) do |f|
+  = f.error_notification
+  %form{:role => "form"}
+    .form-group
+      %label{:for => "name"} Feed name:
+      = f.text_field :name, autofocus: true, class: 'form-control'
+    .form-group
+      %label{:for => "name"} Url:
+      = f.text_field :url, autofocus: true, class: 'form-control'
+    .form-group
+      = f.label :icon, class: 'col-sm-2 control-label'
+      = f.file_field :icon
+    .form-actions
+      = f.button :submit

@@ -13,6 +13,7 @@ class CreateFeeds < ActiveRecord::Migration
       t.text     "type"
       t.boolean  "html"
       t.string   "source"
-     end
+    end
   end
 end
+

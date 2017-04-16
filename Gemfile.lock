@@ -545,7 +545,7 @@ DEPENDENCIES
   mailcatcher
   nokogiri
   paperclip
-  pg (~> 0.18.4)
+  pg
   pry
   puma (~> 3.0)
   rack-mini-profiler

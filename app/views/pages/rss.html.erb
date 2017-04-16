@@ -1,0 +1,18 @@
+<h1>RSS analize</h1>
+
+
+
+
+ 
+
+<% (0..@feed.length-1).each do |i| %>
+   
+   <center><b><%=  @feedname[i] %></br>
+   <%=  @feedurl[i] %></center></b></br>
+   <%=  @feed[i] %></br>
+
+<% end %>  
+
+
+
+<%= link_to 'Back', pages_path %>

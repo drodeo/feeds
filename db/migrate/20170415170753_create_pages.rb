@@ -14,7 +14,7 @@ class CreatePages < ActiveRecord::Migration
       t.integer  "cnt_match", default: 0
       t.boolean  "flag_match", default: false
       t.boolean  "dupl", default: false
-     end
+    end
     add_index "pages", ["url"], name: "index_pages_on_url", unique: true
   end
 end

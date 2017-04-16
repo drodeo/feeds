@@ -3,14 +3,15 @@ require 'sidekiq-status/web'
 
 Rails.application.routes.draw do
 
+  devise_for :users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   mount Sidekiq::Web, at: "/sidekiq"
 
-  devise_for :users
+  #devise_for :users
   # devise_for :users
   resources :tagoverlaps
   resources :tagexcepts
-  resources :sources do
+  resources :feeds do
     resources :infos
   end
   resources :pages
