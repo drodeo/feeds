@@ -13,13 +13,13 @@ class FeedRepository
   def self.update_feed(feed, name, url, group_id = nil)
     feed.name = name
     feed.url = url
-    feed.category_id = group_id
+    feed.group_id = group_id
     feed.save
   end
 
   def self.update_last_fetched(feed, timestamp)
-    if valid_timestamp?(timestamp, feed.last_update_on_time)
-      feed.last_update_on_time = timestamp
+    if valid_timestamp?(timestamp, feed.last_fetched)
+      feed.last_fetched = timestamp
       feed.save
     end
   end

@@ -28,6 +28,11 @@ class PagesController < ApplicationController
   require 'uri'
   require 'nokogiri'
   require 'lingua/stemmer'
+  #require '../services/feeds/fetch_feed'
+  require_relative "../services/feeds/fetch_feed"
+  require_relative "../services/feeds/story_repository"
+  require_relative "../services/feeds/feed_repository"
+  require_relative "../services/feeds/find_new_stories"
 
   include PagesHelper
   TWODAYS = 2*24*60*60
@@ -266,6 +271,14 @@ class PagesController < ApplicationController
 
 
     end
+
+  def load1
+    f=Feed.first
+    feed = FetchFeed.new(f)
+    feed.fetch
+
+    lo
+  end
 
   def load
     feeds = Feed.all

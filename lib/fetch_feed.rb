@@ -45,7 +45,7 @@ class FetchFeed
   end
 
   def new_entries_from(raw_feed)
-    finder = FindNewStories.new(raw_feed, @feed.id, @feed.last_update_on_time, latest_entry_id)
+    finder = FindNewStories.new(raw_feed, @feed.id, @feed.last_fetched, latest_entry_id)
     finder.new_stories
   end
 
@@ -60,6 +60,6 @@ class FetchFeed
   end
 
   def latest_entry_id
-    return @feed.pages.first.id unless @feed.pages.empty?
+    return @feed.pages.first.entry_id unless @feed.pages.empty?
   end
 end

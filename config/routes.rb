@@ -17,8 +17,13 @@ Rails.application.routes.draw do
   resources :pages
   resources :sourcehtmls
 
+  scope module: :feeds do
+    resources :pages, only: [:index, :show]
+  end
+
   root 'pages#index'
   get 'loadnews', to: 'pages#load'
+  get 'loadnews1', to: 'pages#load1'
   get 'analyze', to: 'pages#analyze'
   get 'addwindow', to: 'pages#addwindow'
   get 'category/:category', to: 'pages#index', as: :category

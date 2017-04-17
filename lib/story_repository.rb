@@ -5,25 +5,27 @@ class StoryRepository
   def self.add(entry, feed)
    # entry.url = normalize_url(entry.url, feed.url)
 
-    Page.create(feed_id: feed,
+    Page.create(feed: feed,
                  title: sanitize(entry.title),
-                 url: entry.url,
-                 summary: extract_content(entry),
-                 published: entry.published || Time.now)
-              #   entry_id: entry.id)
+                 permalink: entry.url,
+                 body: extract_content(entry),
+                 is_read: false,
+                 is_starred: false,
+                 published: entry.published || Time.now,
+                 entry_id: entry.id)
   end
 
   def self.fetch(id)
-    Page.find(id)
+    Story.find(id)
   end
 
   def self.fetch_by_ids(ids)
-    Page.where(id: ids)
+    Story.where(id: ids)
   end
 
   def self.fetch_unread_by_timestamp(timestamp)
     timestamp = Time.at(timestamp.to_i)
-    Page.where("pages.created_at < ?", timestamp).where(is_read: false)
+    Story.where("stories.created_at < ?", timestamp).where(is_read: false)
   end
 
   def self.fetch_unread_by_timestamp_and_group(timestamp, group_id)
@@ -32,7 +34,7 @@ class StoryRepository
 
   def self.fetch_unread_for_feed_by_timestamp(feed_id, timestamp)
     timestamp = Time.at(timestamp.to_i)
-    Page.where(feed_id: feed_id).where("created_at < ? AND is_read = ?", timestamp, false)
+    Story.where(feed_id: feed_id).where("created_at < ? AND is_read = ?", timestamp, false)
   end
 
   def self.save(story)
@@ -40,11 +42,11 @@ class StoryRepository
   end
 
   def self.exists?(id, feed_id)
-    Page.exists?(id: id, feed_id: feed_id)
+    Story.exists?(entry_id: id, feed_id: feed_id)
   end
 
   def self.unread
-    Page.where(is_read: false).order("published desc").includes(:feed)
+    Story.where(is_read: false).order("published desc").includes(:feed)
   end
 
   def self.unread_since_id(since_id)
@@ -52,30 +54,30 @@ class StoryRepository
   end
 
   def self.feed(feed_id)
-    Page.where("feed_id = ?", feed_id).order("published desc").includes(:feed)
+    Story.where("feed_id = ?", feed_id).order("published desc").includes(:feed)
   end
 
   def self.read(page = 1)
-    Page.where(is_read: true).includes(:feed)
+    Story.where(is_read: true).includes(:feed)
          .order("published desc").page(page).per_page(20)
   end
 
   def self.starred(page = 1)
-    Page.where(is_starred: true).includes(:feed)
+    Story.where(is_starred: true).includes(:feed)
          .order("published desc").page(page).per_page(20)
   end
 
   def self.all_starred
-    Page.where(is_starred: true)
+    Story.where(is_starred: true)
   end
 
   def self.unstarred_read_stories_older_than(num_days)
-    Page.where(is_read: true, is_starred: false)
+    Story.where(is_read: true, is_starred: false)
          .where("published <= ?", num_days.days.ago)
   end
 
   def self.read_count
-    Page.where(is_read: true).count
+    Story.where(is_read: true).count
   end
 
   def self.extract_content(entry)
@@ -87,7 +89,7 @@ class StoryRepository
       sanitized_content = sanitize(entry.summary)
     end
 
-   # expand_absolute_urls(sanitized_content, entry.url)
+    expand_absolute_urls(sanitized_content, entry.url)
   end
 
   def self.sanitize(content)
