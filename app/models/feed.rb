@@ -32,6 +32,13 @@ class Feed < ApplicationRecord
   scope :rss, -> { where html: false }
   scope :html,-> { where html: true }
 
+  def self.fetch(id)
+    Feed.find(id)
+  end
+
+
+
+
   def self.valid_timestamp?(new_timestamp, current_timestamp)
     new_timestamp && new_timestamp.year >= MIN_YEAR &&
         (current_timestamp.nil? || new_timestamp > current_timestamp)

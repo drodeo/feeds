@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170416102755) do
+ActiveRecord::Schema.define(version: 20170418101303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170416102755) do
     t.integer  "cnt_match",   default: 0
     t.boolean  "flag_match",  default: false
     t.boolean  "dupl",        default: false
+    t.string   "entry_id",    default: ""
     t.index ["url"], name: "index_pages_on_url", unique: true, using: :btree
   end
 

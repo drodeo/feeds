@@ -47,19 +47,11 @@ class FetchFeed
   def new_entries_from(raw_feed)
     finder = FindNewStories.new(raw_feed, @feed.id, @feed.last_update_on_time, latest_entry_id)
     finder.new_stories
+    #binding.pry
   end
 
-  def options
-    {
-      user_agent: USER_AGENT,
-      if_modified_since: @feed.last_update_on_time,
-      timeout: 30,
-      max_redirects: 2,
-      compress: true
-    }
-  end
 
   def latest_entry_id
-    return @feed.pages.first.id unless @feed.pages.empty?
+    return @feed.pages.order('published DESC').first.entry_id unless @feed.pages.empty?
   end
 end

@@ -5,12 +5,14 @@ class StoryRepository
   def self.add(entry, feed)
    # entry.url = normalize_url(entry.url, feed.url)
 
-    Page.create(feed_id: feed,
+    Page.create(feed_id: feed.id,
                  title: sanitize(entry.title),
                  url: entry.url,
+                 image: entry.image,
                  summary: extract_content(entry),
-                 published: entry.published || Time.now)
-              #   entry_id: entry.id)
+                 published: entry.published || Time.now,
+                 entry_id: entry.id)
+    #lo
   end
 
   def self.fetch(id)
@@ -23,11 +25,11 @@ class StoryRepository
 
   def self.fetch_unread_by_timestamp(timestamp)
     timestamp = Time.at(timestamp.to_i)
-    Page.where("pages.created_at < ?", timestamp).where(is_read: false)
+    Page.where("pages.created_at < ?", timestamp)
   end
 
   def self.fetch_unread_by_timestamp_and_group(timestamp, group_id)
-    fetch_unread_by_timestamp(timestamp).joins(:feed).where(feeds: { group_id: group_id })
+    fetch_unread_by_timestamp(timestamp).joins(:feed)
   end
 
   def self.fetch_unread_for_feed_by_timestamp(feed_id, timestamp)

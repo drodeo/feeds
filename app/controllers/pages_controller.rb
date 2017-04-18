@@ -273,11 +273,12 @@ class PagesController < ApplicationController
     end
 
   def load1
-    f=Feed.first
-    feed = FetchFeed.new(f)
-    feed.fetch
-
-    lo
+    feeds = Feed.all
+    feeds.each do |f|
+      feed = FetchFeed.new(f)
+      feed.fetch
+    end
+   # lo
   end
 
   def load
