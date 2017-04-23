@@ -276,9 +276,16 @@ class PagesController < ApplicationController
     feeds = Feed.all
     feeds.each do |f|
       feed = FetchFeed.new(f)
-      feed.fetch
+      begin
+        feed.fetch
+      rescue Feedjira::FetchFailure => e
+        Rails.logger.error e.message
+        next
+      rescue Feedjira::NoParserAvailable => e
+        Rails.logger.error e.message
+        next
+      end
     end
-   # lo
   end
 
   def load
@@ -305,14 +312,11 @@ class PagesController < ApplicationController
                           feed_id: f.id,
                           summary:entry.summary)
         s2 = entry.categories[0] if defined? entry.categories
-        cat1 = Category.find_by(name: s2)
-        if cat1.blank?
-          c = Category.new
-          c.name = s2
-          c.name = "Без категории" if c.name==nil
-          c.save
-          cat1 = Category.last
-        end
+        cat1 = Category.exists?(s2)
+        cat1.name = s2 || "Без категории" if cat1.name==nil
+        cat1.save if s2.blank?
+        cat1 = Category.last
+
         @p.category_id = cat1.id
         @p.image=entry.image if defined? entry.image
         ActsAsTaggableOn.delimiter = [' ', ',']

@@ -18,10 +18,10 @@ class FeedsController < ApplicationController
 
 
 def sourceexport
-    @sources = Source.all
+    @feeds = Feed.all
     f=File.new('sources.txt', 'r+') 
 
-     @sources.each do |tt|
+     @feeds.each do |tt|
       f << [tt.id.to_s,tt.name,tt.ref,tt.created_at.to_s,tt.updated_at.to_s,tt.avatar_file_name,tt.avatar_content_type,tt.avatar_file_size.to_s,tt.avatar_updated_at.to_s, tt.count.to_s, tt.type,tt.html].join(';') <<"\n"
      #oa
      end
@@ -37,15 +37,15 @@ def sourceimport
    csv.each do |row|
    a=row.to_s.split(";")
    s1=a[0][2,a[0].length-2]
-   source=Source.find_by_id(s1)|| Source.new
+   source=Feed.find_by_id(s1)|| Feed.new
    source.name=a[1]
-   source.ref=a[2]
+   source.url=a[2]
    source.created_at=a[3].to_datetime
    source.updated_at =a[4].to_datetime  
-   source.avatar_file_name=a[5]
-   source.avatar_content_type=a[6]
-   source.avatar_file_size=a[7].to_i
-   source.avatar_updated_at=a[8].to_datetime
+   source.icon_file_name=a[5]
+   source.icon_content_type=a[6]
+   source.icon_file_size=a[7].to_i
+   source.icon_updated_at=a[8].to_datetime
    source.count=a[9].to_i
    source.type=a[10]
    source.html=a[11][0,a[11].length-2] 
@@ -85,20 +85,20 @@ def sourceimport
 
   def update
     respond_to do |format|
-      if @source.update(source_params)
-        format.html { redirect_to @source, notice: 'Source was successfully updated.' }
-        format.json { render :show, status: :ok, location: @source }
+      if @feed.update(feed_params)
+        format.html { redirect_to @feed, notice: 'Feed was successfully updated.' }
+        format.json { render :show, status: :ok, location: @feed }
       else
         format.html { render :edit }
-        format.json { render json: @source.errors, status: :unprocessable_entity }
+        format.json { render json: @feed.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @source.destroy
+    @feed.destroy
     respond_to do |format|
-      format.html { redirect_to sources_url, notice: 'Source was successfully destroyed.' }
+      format.html { redirect_to feeds_url, notice: 'Feed was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

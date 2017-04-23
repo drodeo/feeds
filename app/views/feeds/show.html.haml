@@ -1,0 +1,12 @@
+.container
+  %h1 Listing Feeds
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Url
+        %tr
+          %td= @feed.name
+          %td= @feed.url
+  = link_to 'Edit', edit_feed_path(@feed), class:  'btn btn-info'
+  = link_to 'Back', feeds_path, class:  'btn btn-info'

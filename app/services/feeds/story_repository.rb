@@ -4,6 +4,10 @@ class StoryRepository
 
   def self.add(entry, feed)
    # entry.url = normalize_url(entry.url, feed.url)
+    s2 = entry.categories[0] if defined? entry.categories
+    cat1 = Category.exists?(s2)
+    cat1.name = s2 || "Без категории" if cat1.id==nil
+    cat1.save if cat1.id.blank?
 
     Page.create(feed_id: feed.id,
                  title: sanitize(entry.title),
@@ -11,8 +15,10 @@ class StoryRepository
                  image: entry.image,
                  summary: extract_content(entry),
                  published: entry.published || Time.now,
-                 entry_id: entry.id)
-    #lo
+                 entry_id: entry.id,
+                 category_id: cat1.id,
+                 image: (entry.image if defined? entry.image))
+   # lo
   end
 
   def self.fetch(id)
@@ -37,43 +43,16 @@ class StoryRepository
     Page.where(feed_id: feed_id).where("created_at < ? AND is_read = ?", timestamp, false)
   end
 
-  def self.save(story)
-    story.save
+  def self.save(feed)
+    feed.save
   end
 
   def self.exists?(id, feed_id)
     Page.exists?(id: id, feed_id: feed_id)
   end
 
-  def self.unread
-    Page.where(is_read: false).order("published desc").includes(:feed)
-  end
-
-  def self.unread_since_id(since_id)
-    unread.where("id > ?", since_id)
-  end
-
   def self.feed(feed_id)
     Page.where("feed_id = ?", feed_id).order("published desc").includes(:feed)
-  end
-
-  def self.read(page = 1)
-    Page.where(is_read: true).includes(:feed)
-         .order("published desc").page(page).per_page(20)
-  end
-
-  def self.starred(page = 1)
-    Page.where(is_starred: true).includes(:feed)
-         .order("published desc").page(page).per_page(20)
-  end
-
-  def self.all_starred
-    Page.where(is_starred: true)
-  end
-
-  def self.unstarred_read_stories_older_than(num_days)
-    Page.where(is_read: true, is_starred: false)
-         .where("published <= ?", num_days.days.ago)
   end
 
   def self.read_count

@@ -3,6 +3,7 @@ require 'sidekiq-status/web'
 
 Rails.application.routes.draw do
 
+  resources :categories
   devise_for :users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   mount Sidekiq::Web, at: "/sidekiq"
@@ -14,8 +15,9 @@ Rails.application.routes.draw do
   resources :feeds do
     resources :infos
   end
-  resources :pages
-  resources :sourcehtmls
+  resources  :categories
+  resources  :pages
+  resources  :sourcehtmls
 
   scope module: :feeds do
     resources :pages, only: [:index, :show]
@@ -26,7 +28,7 @@ Rails.application.routes.draw do
   get 'loadnews1', to: 'pages#load1'
   get 'analyze', to: 'pages#analyze'
   get 'addwindow', to: 'pages#addwindow'
-  get 'category/:category', to: 'pages#index', as: :category
+ # get 'category/:category', to: 'pages#index', as: :category
   get 'ss', to: 'pages#index'
   get 'data', to: 'pages#index', as: :data
   get 'atags', to: 'pages#atags', controller: 'tag'
@@ -51,7 +53,7 @@ Rails.application.routes.draw do
   get 'diff', to: 'pages#diff'
   get 'parser', to: 'pages#parser'
   get 'sourceexport', to:   'sources#sourceexport'
-  get 'sourceimport', to:   'sources#sourceimport'
+  get 'sourceimport', to:   'feeds#sourceimport'
   get 'tagexceptexport',  controller: 'tag', to: 'tag#tagexceptexport'
   get 'tagexceptimport',  controller: 'tag', to: 'tag#tagexceptimport'
 end
