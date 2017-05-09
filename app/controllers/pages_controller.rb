@@ -429,23 +429,16 @@ end
 
   #@translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')
 
-    if params[:category]
-      @pages = Page.where('category_id' => params['category']).order('published DESC').page(params[:page])
-    elsif params[:tag]
+
+    if params[:tag]
       @pages = Page.tagged_with(params[:tag]).order('published DESC').page(params[:page])
     elsif params[:id]
       @pages = Page.where('source_id' => params['id']).order('published DESC').page(params[:page])
-    elsif params[:data]
-     @pages = Page.where(published: (params['data'].to_time.beginning_of_day..params['data'].to_time.end_of_day)).order('published DESC').page(params[:page])
-    #loa
-    elsif params[:datetimepicker12]
-     @pages = Page.where(published: (params['datetimepicker12'].to_time.beginning_of_day..params['datetimepicker12'].to_time.end_of_day)).order('published DESC').page(params[:page])
-    # loa
     elsif params[:tags]
      @pages = Page.tagged_with(params[:tags]['tag']).order('published DESC').page(params[:page])
     elsif params[:q]
      @search = Page.search(params[:q])
-    @pages = @search.result.order('published DESC').page(params[:page])
+     @pages = @search.result.order('published DESC').page(params[:page])
     elsif params[:format]
       @pages = Page.where('source_id' => params['format']).order('published DESC').page(params[:page])
     else

@@ -1,0 +1,5 @@
+count_pages_in category:
+  cron: "5 * * * *"
+  class: "Categories::CategoryWorker"
+
+

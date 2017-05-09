@@ -128,6 +128,8 @@ GEM
     docile (1.1.5)
     equalizer (0.0.11)
     erubis (2.7.0)
+    et-orbi (1.0.3)
+      tzinfo
     eventmachine (1.0.9.1)
     excon (0.55.0)
     execjs (2.7.0)
@@ -392,6 +394,8 @@ GEM
     ruby_parser (3.8.4)
       sexp_processor (~> 4.1)
     rubyzip (1.2.1)
+    rufus-scheduler (3.4.0)
+      et-orbi (~> 1.0)
     safe_yaml (1.0.4)
     sass (3.4.23)
     sass-rails (5.0.6)
@@ -418,6 +422,12 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       rack-protection (>= 1.5.0)
       redis (~> 3.2, >= 3.2.1)
+    sidekiq-cron (0.4.5)
+      redis-namespace (>= 1.5.2)
+      rufus-scheduler (>= 2.0.24)
+      sidekiq (>= 4.2.1)
+    sidekiq-statistic (1.2.0)
+      sidekiq (>= 3.3.4, < 5)
     sidekiq-status (0.6.0)
       sidekiq (>= 2.7)
     simple_form (3.4.0)
@@ -566,6 +576,8 @@ DEPENDENCIES
   shoulda
   shoulda-matchers
   sidekiq
+  sidekiq-cron
+  sidekiq-statistic
   sidekiq-status
   simple_form
   simplecov

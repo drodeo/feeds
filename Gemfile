@@ -117,6 +117,8 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'sidekiq-status'
+gem 'sidekiq-cron'
+gem 'sidekiq-statistic'
 gem 'telegram_bot'
 gem 'telegram-bot-ruby'
 gem "ruby-stemmer"

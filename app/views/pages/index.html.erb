@@ -23,7 +23,7 @@
            <%= link_to_unless(a.cnt_match.zero?, a.cnt_match, addwindow_path(a), target: "blank"){} %>
         </span>
         <% end %>
-        <%= image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20") unless a.feed.icon.blank? %>
+        <%= link_to image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a.feed_id) unless a.feed.icon.blank? %>
         <%=  link_to a.title, nil, 'href' => a.url , :target => "_blank" , title: a.summary %>
       </summary>
        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") unless a.image.blank? %>

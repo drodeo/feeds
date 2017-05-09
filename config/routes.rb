@@ -8,6 +8,21 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   mount Sidekiq::Web, at: "/sidekiq"
 
+
+  resources :feeds do
+    scope module: :pages do
+      resources :feeds, only: [:index]
+    end
+  end
+
+  resources :categories do
+    scope module: :pages do
+      resources :categories, only: [:index]
+    end
+  end
+
+
+
   #devise_for :users
   # devise_for :users
   resources :tagoverlaps

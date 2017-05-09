@@ -6,9 +6,10 @@ class StoryRepository
    # entry.url = normalize_url(entry.url, feed.url)
     s2 = entry.categories[0] if defined? entry.categories
     cat1 = Category.exists?(s2)
+    #cat2=Category.exists?('Без категории')
     cat1.name = s2 || "Без категории" if cat1.id==nil
     cat1.save if cat1.id.blank?
-
+binding.pry
     Page.create(feed_id: feed.id,
                  title: sanitize(entry.title),
                  url: entry.url,

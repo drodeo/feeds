@@ -5,6 +5,7 @@ class CategoriesController < ApplicationController
   # GET /categories.json
   def index
     @categories = Category.all
+    CategoryWorker.perform_async(1.minutes)
   end
 
   # GET /categories/1
