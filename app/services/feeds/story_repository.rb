@@ -9,7 +9,7 @@ class StoryRepository
     #cat2=Category.exists?('Без категории')
     cat1.name = s2 || "Без категории" if cat1.id==nil
     cat1.save if cat1.id.blank?
-binding.pry
+#binding.pry
     Page.create(feed_id: feed.id,
                  title: sanitize(entry.title),
                  url: entry.url,

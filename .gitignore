@@ -21,3 +21,5 @@
 .byebug_history
 /.idea
 /config/database.yml
+/config/initializers/devise.rb
+/config/secrets.yml

@@ -276,6 +276,8 @@ class PagesController < ApplicationController
     feeds = Feed.all
     feeds.each do |f|
       feed = FetchFeed.new(f)
+
+      binding.pry
       begin
         feed.fetch
       rescue Feedjira::FetchFailure => e
