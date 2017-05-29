@@ -50,6 +50,7 @@ class FetchFeed
   end
 
   def new_entries_from(raw_feed)
+
     finder = FindNewStories.new(raw_feed, @feed.id, @feed.last_update_on_time, latest_entry_id)
     finder.new_stories
     #binding.pry

@@ -1,6 +1,5 @@
 30;wsj;http://www.wsj.com/xml/rss/3_7085.xml;2016-04-05 16:00:48 +0300;2016-08-19 13:35:11 +0300;wsj.png;image/png;3660;2016-08-19 13:35:10 +0300;0;;false
 4;lifenews;https://life.ru/xml/feed.xml;2016-03-09 10:57:10 +0300;2016-08-12 14:59:32 +0300;life.png;image/png;2329;2016-08-12 14:59:32 +0300;0;;false
-24;XINHUA;http://www.xinhuanet.com/english/rss/worldrss.xml;2016-04-06 04:03:23 +0300;2016-08-12 15:34:48 +0300;rss.png;image/png;6924;2016-08-12 15:34:48 +0300;0;;false
 28;south china;http://south-insight.com/rss.xml;2016-04-25 03:27:15 +0300;2016-08-12 15:36:14 +0300;rss.png;image/png;6924;2016-08-12 15:36:13 +0300;0;;false
 34;aif;http://www.aif.ru/rss/all.php;2016-04-29 05:09:47 +0300;2016-08-19 13:41:21 +0300;aif.png;image/png;9054;2016-08-19 13:41:20 +0300;0;;false
 8;Lenta;http://lenta.ru/rss;2016-03-17 05:52:42 +0300;2016-08-19 13:43:45 +0300;lenta.ico;image/vnd.microsoft.icon;529;2016-08-19 13:43:45 +0300;0;;false
@@ -49,5 +48,15 @@
 59;babr;http://newsbabr.com/rss/news.xml;2016-08-26 15:31:37 +0300;2016-08-26 15:31:37 +0300;babr.png;image/png;847;2016-08-26 15:31:37 +0300;;;false
 61;aftershock;http://feeds.feedburner.com/aftershock/blogs;2016-08-26 15:33:04 +0300;2016-08-26 15:33:04 +0300;aftershock.ico;image/vnd.microsoft.icon;534;2016-08-26 15:33:04 +0300;;;false
 66;rosbalt;http://www.rosbalt.ru/feed/;2016-08-26 15:37:07 +0300;2016-08-26 15:37:07 +0300;rosbalt.png;image/png;153045;2016-08-26 15:37:06 +0300;;;false
-40;tpp-inform;http://tpp-inform.ru/rss/rss-news/;2016-05-10 02:50:24 +0300;2017-01-04 11:34:16 +0300;tpp.ico;image/vnd.microsoft.icon;533;2016-08-28 05:54:14 +0300;0;;true
-
+11;bfm;http://www.bfm.ru/news.rss?type=news;2016-03-18 05:49:57 +0300;2017-01-06 17:16:06 +0300;bfm.ico;image/x-icon;281;2016-08-24 02:52:01 +0300;0;;true
+41;forbes ;http://www.forbes.ru/newrss.xml;2016-04-29 04:48:47 +0300;2017-01-14 22:13:08 +0300;forbes.ico;image/x-icon;133;2016-08-24 02:49:53 +0300;0;;false
+25;news2;http://news2.ru/rss/news/;2016-04-16 07:20:54 +0300;2017-03-06 09:55:08 +0300;news2.png;image/png;1695;2017-03-06 09:55:07 +0300;0;;false
+51;euronews;http://feeds.feedburner.com/euronews/ru/news/;2016-05-31 02:48:19 +0300;2017-03-12 21:48:49 +0300;euro.png;image/png;4717;2017-03-12 21:48:48 +0300;0;;false
+67;whoswhos;http://whoswhos.org/rss.xml;2016-08-26 15:38:19 +0300;2016-08-28 05:55:43 +0300;whos.ico;image/vnd.microsoft.icon;265;2016-08-28 05:55:43 +0300;;;false
+64;korrespondent ua;http://k.img.com.ua/rss/ru/all_news2.0.xml;2016-08-26 15:35:26 +0300;2016-08-28 05:56:52 +0300;korrespondent.ico;image/vnd.microsoft.icon;440;2016-08-28 05:56:51 +0300;;;false
+63;rambler;http://news.rambler.ru/rss/head/;2016-08-26 15:34:23 +0300;2016-08-28 05:59:36 +0300;rambler.png;image/png;103;2016-08-28 05:59:36 +0300;;;false
+60;gazeta;http://www.gazeta.ru/export/rss/lenta.xml;2016-08-26 15:32:19 +0300;2016-08-28 14:29:20 +0300;gazeta.ico;image/vnd.microsoft.icon;308;2016-08-28 14:29:20 +0300;;;false
+27;infox;http://www.infox.ru/rss.xml;2016-04-16 07:40:32 +0300;2016-08-28 14:32:24 +0300;infox.ico;image/vnd.microsoft.icon;137;2016-08-28 14:32:23 +0300;0;;false
+68;eadayly;http://eadaily.com/ru/rss/index.xml;2016-09-02 06:37:22 +0300;2016-09-02 06:37:22 +0300;eadayly.png;image/png;1948;2016-09-02 06:37:19 +0300;;;false
+69;glav.su;http://glav.su/news/rss/;2016-09-16 13:33:54 +0300;2016-09-16 13:33:54 +0300;glav.ico;image/vnd.microsoft.icon;766;2016-09-16 13:33:51 +0300;;;false
+70;popmech;http://www.popmech.ru/out/public-all.xml;2016-09-16 13:35:41 +0300;2016-09-16 13:35:41 +0300;popmech.png;image/png;169;2016-09-16 13:35:40 +0300;;;false
