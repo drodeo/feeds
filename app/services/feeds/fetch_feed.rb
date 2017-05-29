@@ -29,7 +29,13 @@ class FetchFeed
   private
 
   def fetch_raw_feed
+    begin
     @parser.fetch_and_parse(@feed.url)
+      feed.fetch
+    rescue Faraday::TimeoutError => e
+      Rails.logger.error e.message
+      next
+    end
   end
 
   def feed_not_modified
