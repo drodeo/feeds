@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.order("count DESC")
+    @categories = Category.where(parent_id: 0).order("count DESC")
     CategoryWorker.perform_async(60.minutes)
   end
 
@@ -10,11 +10,11 @@ class CategoriesController < ApplicationController
   end
 
   def count_categories
-    @cats=Category.all
+    @cats=Category.order("count DESC")
     @cats.each do |cat|
       cat.count=Page.where(category_id: cat.id).count
+      lo
       cat.save
-      # puts cat.name,cat.count
     end
     cat1=Category.exists?('Без категории')
     @nocat=Page.where(category_id: nil)
@@ -26,10 +26,12 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+    @list=Category.pluck(:name,:id)
   end
 
   # GET /categories/1/edit
   def edit
+    @list=Category.pluck(:name,:id)
   end
 
   # POST /categories
@@ -51,8 +53,13 @@ class CategoriesController < ApplicationController
   # PATCH/PUT /categories/1
   # PATCH/PUT /categories/1.json
   def update
+    category=Category.find(params[:category][:parent_id])
+    @category.children<<category
+
     respond_to do |format|
-      if @category.update(category_params)
+     # binding.pry
+      #lo
+      if @category.update( category_params)
         format.html { redirect_to @category, notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: @category }
       else
@@ -81,6 +88,7 @@ class CategoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.fetch(:category, {})
-      params.require(:category).permit(:name, :standard, :parent_id)
+      params.require(:category).permit(:name, :standard)
+      #category_params.merge(parent: params[:parent].to_i)
     end
 end

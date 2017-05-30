@@ -8,7 +8,8 @@
       %label{:for => "name"} Url:
       = f.input :standard, as: :boolean, autofocus: true, class: 'form-control'
     .form-group
-      %label{:for => "name"} Родитель:
-      = f.text_field :parent, autofocus: true, class: 'form-control'
+      = f.label "Поле в Easy"
+      = f.association :parent, collection: @list, prompt: "Choose a Company", autofocus: true, class: 'form-control'
+    // = f.input :parent, options_for_select(@list.collect{ |u| [u[0], u[1]]} ), autofocus: true, class: 'form-control'
     .form-actions
       = f.button :submit
