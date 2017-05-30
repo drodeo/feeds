@@ -1,16 +1,26 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
-  # GET /categories
-  # GET /categories.json
   def index
-    @categories = Category.all
-    CategoryWorker.perform_async(1.minutes)
+    @categories = Category.order("count DESC")
+    CategoryWorker.perform_async(60.minutes)
   end
 
-  # GET /categories/1
-  # GET /categories/1.json
   def show
+  end
+
+  def count_categories
+    @cats=Category.all
+    @cats.each do |cat|
+      cat.count=Page.where(category_id: cat.id).count
+      cat.save
+      # puts cat.name,cat.count
+    end
+    cat1=Category.exists?('Без категории')
+    @nocat=Page.where(category_id: nil)
+    @nocat.update_all category_id: cat1.id
+    cat1.count=Page.where(category_id: cat1.id).count
+    cat1.save
   end
 
   # GET /categories/new
@@ -71,5 +81,6 @@ class CategoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.fetch(:category, {})
+      params.require(:category).permit(:name, :standard, :parent_id)
     end
 end

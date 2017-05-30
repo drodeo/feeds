@@ -23,3 +23,4 @@
 /config/database.yml
 /config/initializers/devise.rb
 /config/secrets.yml
+/public/system/

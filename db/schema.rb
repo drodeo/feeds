@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170418101303) do
+ActiveRecord::Schema.define(version: 20170530125343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,15 +19,19 @@ ActiveRecord::Schema.define(version: 20170418101303) do
     t.integer  "source_id"
     t.string   "name"
     t.integer  "count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.boolean  "standard"
+    t.integer  "parent",     default: 0
+    t.string   "language"
+    t.string   "taggs",      default: ""
   end
 
   create_table "feeds", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "icon_file_name"
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
@@ -37,6 +41,11 @@ ActiveRecord::Schema.define(version: 20170418101303) do
     t.boolean  "html"
     t.string   "source"
     t.integer  "last_update_on_time", default: 0
+    t.datetime "last_fetched"
+    t.boolean  "standard"
+    t.integer  "parent",              default: 0
+    t.string   "language"
+    t.string   "taggs",               default: ""
   end
 
   create_table "pages", force: :cascade do |t|

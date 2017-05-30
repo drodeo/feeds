@@ -8,6 +8,8 @@
 #
 
 class Category < ApplicationRecord
+  
+  belongs_to :parent, class_name: 'Category'
   has_many :pages, dependent: :destroy
   validates :name, uniqueness: true
 

@@ -1,7 +1,14 @@
 = simple_form_for(@category) do |f|
   = f.error_notification
-
-  .form-inputs
-
-  .form-actions
-    = f.button :submit
+  %form{:role => "form"}
+    .form-group
+      %label{:for => "name"} Category name:
+      = f.text_field :name, autofocus: true, class: 'form-control'
+    .form-group
+      %label{:for => "name"} Url:
+      = f.input :standard, as: :boolean, autofocus: true, class: 'form-control'
+    .form-group
+      %label{:for => "name"} Родитель:
+      = f.text_field :parent, autofocus: true, class: 'form-control'
+    .form-actions
+      = f.button :submit

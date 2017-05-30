@@ -11,13 +11,13 @@ Rails.application.routes.draw do
 
   resources :feeds do
     scope module: :pages do
-      resources :feeds, only: [:index]
+      resources :feeds, only: [:index], shallow: true
     end
   end
 
   resources :categories do
     scope module: :pages do
-      resources :categories, only: [:index]
+      resources :categories, only: [:index], shallow: true
     end
   end
 
@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   end
 
   root 'pages#index'
+  get 'count_categories', to: 'categories#count_categories'
   get 'loadnews', to: 'pages#load'
   get 'loadnews1', to: 'pages#load1'
   get 'analyze', to: 'pages#analyze'

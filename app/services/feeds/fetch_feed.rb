@@ -33,7 +33,8 @@ class FetchFeed
     @parser.fetch_and_parse(@feed.url)
     rescue Faraday::TimeoutError => e
       Rails.logger.error e.message
-      #next
+    rescue Faraday::ConnectionFailed => e
+      Rails.logger.error e.message  #next
     end
   end
 
