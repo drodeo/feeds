@@ -13,7 +13,9 @@ class CategoriesController < ApplicationController
     @cats=Category.order("count DESC")
     @cats.each do |cat|
       cat.count=Page.where(category_id: cat.id).count
-      lo
+      cat.children.each do |c|
+        cat.count += c.count
+      end
       cat.save
     end
     cat1=Category.exists?('Без категории')
