@@ -3,6 +3,7 @@ require "feedjira"
 
 class FetchFeed
   USER_AGENT = "Feedjira".freeze
+  MAX_RETRIES = 3
 
   def initialize(feed, parser: Feedjira::Feed, logger: nil)
     @feed = feed
@@ -18,25 +19,30 @@ class FetchFeed
     else
       feed_modified(raw_feed)
     end
-
-  #  FeedRepository.set_status(:green, @feed)
- # rescue => ex
-  #  FeedRepository.set_status(:red, @feed)
-
     @logger.error "Something went wrong when parsing #{@feed.url}: #{ex}" if @logger
   end
 
   private
 
   def fetch_raw_feed
-    begin
-    @parser.fetch_and_parse(@feed.url)
-    rescue Faraday::TimeoutError => e
-      Rails.logger.error e.message
-    rescue Faraday::ConnectionFailed => e
-      Rails.logger.error e.message  #next
+    retry_exceptions do
+      begin
+        @parser.fetch_and_parse(@feed.url)
+        rescue Net::OpenTimeout, Net::ReadTimeout, Timeout::Error => e
+          Rails.logger.error e.message
+        rescue Faraday::TimeoutError => e
+          Rails.logger.error e.message
+        rescue Faraday::ConnectionFailed => e
+          Rails.logger.error e.message  #next
+      end
     end
   end
+
+
+  
+  
+  
+  
 
   def feed_not_modified
     @logger.info "#{@feed.url} has not been modified since last fetch" if @logger
@@ -60,5 +66,16 @@ class FetchFeed
 
   def latest_entry_id
     return @feed.pages.order('published DESC').first.entry_id unless @feed.pages.empty?
+  end
+
+  def retry_exceptions
+    retries = MAX_RETRIES
+    begin
+      yield
+    rescue Feedjira::ConnectionTimeout
+      retries -= 1
+      retry unless retries.zero?
+      raise
+    end
   end
 end

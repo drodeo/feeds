@@ -12,6 +12,7 @@
   <tbody>
   <right><%= Time.zone.now().strftime("%T") %> </right>
   <% @pages.includes(:feed).each_slice(3) do |a, b,c| %>
+  <% cache [a,b,c] do%>
   <tr>
     <td><h6><%= a.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
 	  <td>
@@ -70,7 +71,7 @@
 
 
     </tr>
-	
+      <% end %>
     <% end %>
    
  
