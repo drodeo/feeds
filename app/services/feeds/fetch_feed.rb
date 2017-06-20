@@ -29,13 +29,13 @@ class FetchFeed
       begin
         @parser.fetch_and_parse(@feed.url)
         rescue Net::OpenTimeout, Net::ReadTimeout, Timeout::Error => e
-          Rails.logger.error e.message, @feed.url
+          Rails.logger.error e.message+" "+@feed.url
           @logger=e.message
         rescue Faraday::TimeoutError => e
-          Rails.logger.error e.message, @feed.url
+          Rails.logger.error e.message+" "+@feed.url
           @logger=e.message
         rescue Faraday::ConnectionFailed => e
-          Rails.logger.error e.message, @feed.url
+          Rails.logger.error e.message+" "+@feed.url
           @logger=e.message
       end
     #end
