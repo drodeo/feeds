@@ -19,7 +19,7 @@ class FetchFeed
     else
       feed_modified(raw_feed) if !@logger
     end
-    @logger.error "Something went wrong when parsing #{@feed.url}: #{ex}" if @logger
+    #@logger.error "Something went wrong when parsing #{@feed.url}: #{@logger}" if @logger
   end
 
   private
@@ -29,13 +29,13 @@ class FetchFeed
       begin
         @parser.fetch_and_parse(@feed.url)
         rescue Net::OpenTimeout, Net::ReadTimeout, Timeout::Error => e
-          Rails.logger.error e.message
+          Rails.logger.error e.message, @feed.url
           @logger=e.message
         rescue Faraday::TimeoutError => e
-          Rails.logger.error e.message
+          Rails.logger.error e.message, @feed.url
           @logger=e.message
         rescue Faraday::ConnectionFailed => e
-          Rails.logger.error e.message  #next
+          Rails.logger.error e.message, @feed.url
           @logger=e.message
       end
     #end
