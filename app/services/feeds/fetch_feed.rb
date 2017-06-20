@@ -25,7 +25,7 @@ class FetchFeed
   private
 
   def fetch_raw_feed
-    retry_exceptions do
+    #retry_exceptions do
       begin
         @parser.fetch_and_parse(@feed.url)
         rescue Net::OpenTimeout, Net::ReadTimeout, Timeout::Error => e
@@ -35,7 +35,7 @@ class FetchFeed
         rescue Faraday::ConnectionFailed => e
           Rails.logger.error e.message  #next
       end
-    end
+    #end
   end
 
 
