@@ -276,7 +276,7 @@ class PagesController < ApplicationController
     feeds = Feed.order("created_at DESC")
     feeds.each do |f|
       feed = FetchFeed.new(f)
-
+      logger.info f.name
       #binding.pry
       begin
         feed.fetch
