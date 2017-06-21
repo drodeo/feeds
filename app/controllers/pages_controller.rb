@@ -273,7 +273,7 @@ class PagesController < ApplicationController
     end
 
   def load1
-    feeds = Feed.all
+    feeds = Feed.order("created_at DESC")
     feeds.each do |f|
       feed = FetchFeed.new(f)
 
