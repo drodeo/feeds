@@ -31,7 +31,6 @@ class PagesController < ApplicationController
   #require '../services/feeds/fetch_feed'
   require_relative "../services/feeds/fetch_feed"
   require_relative "../services/feeds/story_repository"
-  require_relative "../services/feeds/feed_repository"
   require_relative "../services/feeds/find_new_stories"
 
   include PagesHelper

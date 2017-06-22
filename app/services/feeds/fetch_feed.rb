@@ -4,6 +4,7 @@ require "feedjira"
 class FetchFeed
   USER_AGENT = "Feedjira".freeze
   MAX_RETRIES = 3
+  MIN_YEAR = 1970
 
   def initialize(feed, parser: Feedjira::Feed, logger: nil)
     @feed = feed
@@ -40,13 +41,7 @@ class FetchFeed
       end
     #end
   end
-
-
   
-  
-  
-  
-
   def feed_not_modified
     @logger.info "#{@feed.url} has not been modified since last fetch" if @logger
   end
@@ -56,7 +51,7 @@ class FetchFeed
       StoryRepository.add(entry, @feed)
     end
 
-    FeedRepository.update_last_fetched(@feed, raw_feed.last_modified)
+    update_last_fetched(@feed, raw_feed.last_modified)
   end
 
   def new_entries_from(raw_feed)
@@ -66,6 +61,18 @@ class FetchFeed
     #binding.pry
   end
 
+  def update_last_fetched(feed, timestamp)
+    #lo
+    if valid_timestamp?(timestamp, feed.last_fetched)
+      feed.last_update_on_time = timestamp
+      feed.save
+    end
+  end
+  
+  def valid_timestamp?(new_timestamp, current_timestamp)
+    new_timestamp && new_timestamp.year >= MIN_YEAR &&
+        (current_timestamp.nil? || new_timestamp > current_timestamp)
+  end
 
   def latest_entry_id
     return @feed.pages.order('published DESC').first.entry_id unless @feed.pages.empty?

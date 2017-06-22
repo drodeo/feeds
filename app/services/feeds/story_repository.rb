@@ -68,12 +68,12 @@ class StoryRepository
     elsif entry.summary
       sanitized_content = sanitize(entry.summary)
     end
-
+ # binding.pry
    # expand_absolute_urls(sanitized_content, entry.url)
   end
 
   def self.sanitize(content)
-    Loofah.fragment(content.gsub(/<wbr\s*>/i, ""))
+    Loofah.fragment(content.gsub(/&nbsp<a.+>(.*)<\/a>&nbsp/, ""))
           .scrub!(:prune)
           .scrub!(:unprintable)
           .to_s
