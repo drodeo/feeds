@@ -18,8 +18,7 @@ class StoryRepository
                  published: entry.published || Time.now,
                  entry_id: entry.id,
                  category_id: cat1.id,
-                 image: (entry.image if defined? entry.image))
-   # lo
+                 image: (entry.image if defined? entry.image)) if !entry.title.blank?
   end
 
   def self.fetch(id)
