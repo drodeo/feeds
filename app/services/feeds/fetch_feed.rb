@@ -15,7 +15,7 @@ class FetchFeed
   def fetch
     raw_feed = fetch_raw_feed
 
-    if raw_feed == 304
+    if raw_feed == 304 || raw_feed
       feed_not_modified
     else
       feed_modified(raw_feed) if !@logger
@@ -43,7 +43,7 @@ class FetchFeed
   end
   
   def feed_not_modified
-    @logger.info "#{@feed.url} has not been modified since last fetch" if @logger
+    #@logger.error "#{@feed.url} has not been modified since last fetch" if @logger
   end
 
   def feed_modified(raw_feed)
