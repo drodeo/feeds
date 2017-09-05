@@ -13,7 +13,6 @@ class StoryRepository
     Page.create(feed_id: feed.id,
                  title: sanitize(entry.title),
                  url: entry.url,
-                 image: entry.image,
                  summary: extract_content(entry),
                  published: entry.published || Time.now,
                  entry_id: entry.id,

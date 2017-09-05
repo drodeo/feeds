@@ -15,7 +15,10 @@ class FetchFeed
   def fetch
     raw_feed = fetch_raw_feed
 
-    if raw_feed == 304 || raw_feed
+    if raw_feed == 304
+      feed_not_modified
+    end
+    if  raw_feed==true
       feed_not_modified
     else
       feed_modified(raw_feed) if !@logger

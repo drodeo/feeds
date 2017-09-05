@@ -123,3 +123,4 @@ gem 'telegram_bot'
 gem 'telegram-bot-ruby'
 gem "ruby-stemmer"
 gem "tf-idf-similarity"
+
