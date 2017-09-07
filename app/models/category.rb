@@ -14,6 +14,8 @@ class Category < ApplicationRecord
   validates :name, uniqueness: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
 
+  self.per_page = 100
+
   def self.exists?(name)
     Category.find_by_name(name) || Category.new
   end

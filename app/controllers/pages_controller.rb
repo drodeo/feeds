@@ -446,7 +446,7 @@ end
       @pages = Page.order('published DESC').page(params[:page])
     end
     sources = Feed.all
-    FetchingWorker.perform_async(5.minutes)
+    #FetchingWorker.perform_async(5.minutes)
     #FetchNewsWorker.perform_async(sources,28.minutes)
     #TagsWorker.perform_async(30.minutes)
     #CategoryWorker.perform_async(62.minutes)

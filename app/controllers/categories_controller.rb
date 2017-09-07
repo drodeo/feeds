@@ -4,12 +4,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.where(parent_id: 0).order("count DESC")
-    Sidekiq::Testing.inline! do
-      CategoryWorker.perform_async(60.minutes)
-      #assert_worked_hard
-    end
-    CategoryWorker.perform_async(60.minutes)
+    @categories = Category.where(parent_id: 0).order("count DESC").page(params[:page])
   end
 
   def show

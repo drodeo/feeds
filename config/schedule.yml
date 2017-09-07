@@ -1,0 +1,7 @@
+category_count:
+  cron: "* 1 * * *"
+  class: "CategoryWorker"
+
+fetch_pages:
+  cron: "5 * * * *"
+  class: "FetchingWorker"
