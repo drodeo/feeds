@@ -11,7 +11,15 @@
      </tr>
   </thead>
   <tbody>
-  <right><%= Time.zone.now().strftime("%T") %> </right>
+
+  <% content_for :search do %>
+
+      <%= search_form_for @search do |f| %>
+          <%= f.text_field :title_cont, class: "radius-left expand", placeholder: "Поиск" %>
+          <%= f.submit "Поиск", class: "radius-right button" %>
+
+      <% end %>
+  <% end %>
   <% @pages.includes(:feed).each_slice(3) do |a, b,c| %>
   <% cache [a,b,c] do%>
   <tr>

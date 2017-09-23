@@ -23,6 +23,8 @@ module Feeds
     # -- all .rb files in that directory are automatically loaded.
     config.autoload_paths += %W["#{config.root}/app/services/feeds"]
     config.autoload_paths += %W["#{config.root}/app/workers/"]
+    config.time_zone = 'Moscow'
+    config.active_record.default_timezone = :local
   end
 end
 

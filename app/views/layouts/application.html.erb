@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <%= yield(:search) %>
+
   <title>Новости</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="icon" href="favicon.png" type="image/png">
@@ -20,6 +20,14 @@
 <body>
  <div class="container-fluid">
     <%= render "nav" %>
+   <div class="row">
+     <div class="col-sm-4" text-left>
+       <b><%= Time.zone.now().strftime("%T") %></b>
+     </div>
+     <div class="col-sm-8 text-right">
+     <%= yield(:search) %>
+     </div>
+   </div>
 <% flash.each do |key, value| %>
     <div class="alert alert-<%= key %> alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

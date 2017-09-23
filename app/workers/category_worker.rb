@@ -3,7 +3,7 @@ class CategoryWorker
   include Sidekiq::Status::Worker # Important!
 
 
-  def perform(count)
+  def perform
     @cats=Category.all
     @cats.each do |cat|
       cat.count=Page.where(category_id: cat.id).count
