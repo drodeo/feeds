@@ -461,8 +461,8 @@ end
   end
 
   def redis
-   @source = Source.all
-    @pages = $redis.get('pages')
+   @source = Feed.all
+   @pages = $redis.get('pages')
 
     if @pages.nil?
       @pages = Page.order('published DESC').page(params[:page]).to_json
@@ -474,12 +474,12 @@ end
     @pages = JSON.load @pages
 
 
-    @sources = $redis.get('sourses')
+    @sources = $redis.get('feeds')
     if @sources.nil?
-      @sources = Source.all.to_json
-      $redis.set('sources', @sources)
+      @sources = Feed.all.to_json
+      $redis.set('feeds', @sources)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-      $redis.expire('sources', 5.hours.to_i)
+      $redis.expire('feeds', 5.hours.to_i)
     end
 
     @sources = JSON.load @sources

@@ -29,4 +29,8 @@ module PagesHelper
     end
   end
 
+  def cut_summary(str)
+    str=str[0..400]+"..."
+  end
+
 end

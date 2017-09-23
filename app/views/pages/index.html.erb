@@ -3,9 +3,9 @@
   <thead>
     <tr>
       <th width="2%"> </th>
-	    <th width="31%"> </th>
+      <th width="31%"> </th>
       <th width="2%"> </th>
-	    <th width="31%"> </th>
+      <th width="31%"> </th>
       <th width="2%"> </th>
       <th width="31%"> </th>
      </tr>
@@ -24,9 +24,9 @@
   <% cache [a,b,c] do%>
   <tr>
     <td><h6><%= a.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
-	  <td>
+    <td>
       <% a.summary= " " if a.summary.blank? %>
-	  <details>
+      <details>
       <summary>
         <% unless a.cnt_match.zero? %>
         <span class="badge">
@@ -34,10 +34,10 @@
         </span>
         <% end %>
         <%= link_to image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a.feed_id) unless a.feed.icon.blank? %>
-        <%=  link_to a.title, nil, 'href' => a.url , :target => "_blank" , title: a.summary %>
+        <%=  link_to a.title, nil, 'href' => a.url , :target => "_blank" , title: strip_tags( cut_summary(markdown(a.summary))) %>
       </summary>
        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") unless a.image.blank? %>
-         <%= strip_tags markdown(a.summary) %>
+         <%= strip_tags cut_summary(markdown(a.summary)) %>
        </div>
     </details>
 	  </td>
