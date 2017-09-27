@@ -5,3 +5,7 @@
 fetch_pages:
   cron: "*/20 * * * *"
   class: "FetchingWorker"
+
+info_count:
+  cron: "* */12 * * *"
+  class: "InfodayWorker"

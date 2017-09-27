@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170530181939) do
+ActiveRecord::Schema.define(version: 20170927082205) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,18 @@ ActiveRecord::Schema.define(version: 20170530181939) do
     t.integer  "parent",              default: 0
     t.string   "language"
     t.string   "taggs",               default: ""
+  end
+
+  create_table "infos", force: :cascade do |t|
+    t.integer  "feed_id"
+    t.datetime "data"
+    t.integer  "size"
+    t.integer  "page_count"
+    t.integer  "tag_count"
+    t.integer  "tagging"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["feed_id", "data"], name: "index_infos_on_feed_id_and_data", unique: true, using: :btree
   end
 
   create_table "pages", force: :cascade do |t|
