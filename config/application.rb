@@ -25,6 +25,7 @@ module Feeds
     config.autoload_paths += %W["#{config.root}/app/workers/"]
     config.time_zone = 'Moscow'
     config.active_record.default_timezone = :local
+    $LOAD_PATH << File.join('app', 'services', 'feeds')
   end
 end
 
