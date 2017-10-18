@@ -412,7 +412,7 @@ end
   end
 
   def rss
-    @source = Source.all
+    @source = Feed.all
     analyzerss
     #@feed=FeedPresenter.new(@source)
     #@feed.caption

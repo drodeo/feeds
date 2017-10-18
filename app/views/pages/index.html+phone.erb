@@ -1,0 +1,36 @@
+<meta name="viewport" content="initial-scale=1, maximum-scale=1" />
+<p id="notice"><%= notice %></p>
+<table class="table table-striped  table-condensed">
+  <thead>
+  <tr>
+    <th width="2%"></th>
+    <th width="98%"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% content_for :search do %>
+      <%= search_form_for @search do |f| %>
+          <%= f.text_field :title_cont, class: "radius-left expand", placeholder: "Поиск" %>
+          <%= f.submit "Поиск", class: "radius-right button" %>
+      <% end %>
+  <% end %>
+  <% @pages.includes(:feed).each do |a| %>
+    <% cache [a] do%>
+      <tr>
+        <td><h6><%= a.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
+        <td>
+          <%= link_to image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a.feed_id) unless a.feed.icon.blank? %>
+          <%= link_to a.title, nil, 'href' => a.url , :target => "_blank"  %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+
+</table>
+
+
+<%= paginate(@pages) %>
+
+
+

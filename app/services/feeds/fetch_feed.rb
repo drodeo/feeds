@@ -41,6 +41,9 @@ class FetchFeed
         rescue Faraday::ConnectionFailed => e
           Rails.logger.error e.message+" "+@feed.url
           @logger=e.message
+        rescue Feedjira::FetchFailure => e
+          Rails.logger.error e.message+" "+@feed.url
+          @logger=e.message
       end
     #end
   end

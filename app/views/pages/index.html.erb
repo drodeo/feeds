@@ -1,3 +1,4 @@
+<% render_view %>
 <div class="table-responsive">
 <table class="table table-striped  table-condensed">
   <thead>
@@ -13,13 +14,12 @@
   <tbody>
 
   <% content_for :search do %>
-
       <%= search_form_for @search do |f| %>
           <%= f.text_field :title_cont, class: "radius-left expand", placeholder: "Поиск" %>
           <%= f.submit "Поиск", class: "radius-right button" %>
-
       <% end %>
   <% end %>
+
   <% @pages.includes(:feed).each_slice(3) do |a, b,c| %>
   <% cache [a,b,c] do%>
   <tr>
@@ -34,16 +34,16 @@
         </span>
         <% end %>
         <%= link_to image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a.feed_id) unless a.feed.icon.blank? %>
-        <%=  link_to a.title, nil, 'href' => a.url , :target => "_blank" , title: strip_tags( cut_summary(markdown(a.summary))) %>
+        <%=  link_to a.title, nil, 'href' => a.url , :target => "_blank" , title:  cut_summary(markdown(a.summary)) %>
       </summary>
        <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") unless a.image.blank? %>
-         <%= strip_tags cut_summary(markdown(a.summary)) %>
+         <%= cut_summary(markdown(a.summary)) %>
        </div>
     </details>
-	  </td>
-	  <% if b!=nil%>
-		<td> <h6><%= b.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
-	  <td>
+    </td>
+    <% if b!=nil%>
+     <td> <h6><%= b.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
+     <td>
       <% b.summary= " " if b.summary.blank? %>
        <details>
          <summary>
@@ -54,7 +54,7 @@
          <%= image_tag(b.image, class: 'avatar2', :size => "200") unless b.image.blank?  %><%= markdown(b.summary) %>
        </details>
       <% end %>
-	  </td>
+     </td>
 
 
      <% if c!=nil%>
