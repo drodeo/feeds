@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927082205) do
+ActiveRecord::Schema.define(version: 20171031183243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,11 +27,23 @@ ActiveRecord::Schema.define(version: 20170927082205) do
     t.integer  "parent_id",  default: 0
   end
 
+  create_table "channs", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.integer  "feed_id"
+    t.boolean  "email_notification"
+    t.integer  "email_period"
+    t.boolean  "tgram_notification"
+    t.integer  "tgram_period"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
   create_table "feeds", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "icon_file_name"
     t.string   "icon_content_type"
     t.integer  "icon_file_size"
@@ -46,6 +58,7 @@ ActiveRecord::Schema.define(version: 20170927082205) do
     t.integer  "parent",              default: 0
     t.string   "language"
     t.string   "taggs",               default: ""
+    t.boolean  "twitter",             default: false
   end
 
   create_table "infos", force: :cascade do |t|
@@ -78,6 +91,13 @@ ActiveRecord::Schema.define(version: 20170927082205) do
     t.index ["url"], name: "index_pages_on_url", unique: true, using: :btree
   end
 
+  create_table "tagexcepts", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tagexcepts_on_name", unique: true, using: :btree
+  end
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.string   "taggable_type"
@@ -95,6 +115,15 @@ ActiveRecord::Schema.define(version: 20170927082205) do
     t.index ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
     t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
     t.index ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
+  end
+
+  create_table "tagoverlaps", force: :cascade do |t|
+    t.string   "name"
+    t.string   "nametarget"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tagoverlaps_on_name", unique: true, using: :btree
+    t.index ["nametarget"], name: "index_tagoverlaps_on_nametarget", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|

@@ -9,3 +9,7 @@ fetch_pages:
 info_count:
   cron: "* */12 * * *"
   class: "InfodayWorker"
+
+tweets:
+  cron: "*/30 * * * *"
+  class: "FetchingTweetsWorker"

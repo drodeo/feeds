@@ -1,0 +1,8 @@
+= simple_form_for(@channel) do |f|
+  = f.error_notification
+  %form{:role => "form"}
+    .form-group
+      %label{:for => "name"} Channel name:
+      = f.text_field :name, autofocus: true, class: 'form-control'
+    .form-actions
+      = f.button :submit

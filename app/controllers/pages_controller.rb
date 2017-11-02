@@ -28,6 +28,7 @@ class PagesController < ApplicationController
   require 'uri'
   require 'nokogiri'
   require 'lingua/stemmer'
+  require 'twitter'
   #require '../services/feeds/fetch_feed'
   require_relative "../services/feeds/fetch_feed"
   require_relative "../services/feeds/story_repository"
@@ -35,6 +36,31 @@ class PagesController < ApplicationController
 
   include PagesHelper
   TWODAYS = 2*24*60*60
+
+  def loadtweets
+    client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = ENV['CONSUMER_KEY']
+      config.consumer_secret     = ENV['CONSUMER_SECRET']
+      config.access_token        = ENV['ACCESS_TOKEN']
+      config.access_token_secret = ENV['ACCESS_TOKEN_SECRET']
+    end
+    @tweets = client.user_timeline('rns_online', count: 100)
+    feeds = Feed.tweets
+    feeds.each do |f|
+      @tweets = client.user_timeline(f.name, count: 100)
+      # entry.url = normalize_url(entry.url, feed.url)
+      @tweets.each do |tweet|
+      entry=tweet.full_text.split('https')
+      Page.create(feed_id: f.id,
+                  title: entry[0],
+                  url: "https"<<entry[1],
+                  summary: '',
+                  published: tweet.created_at || Time.now) if !tweet.text.blank?
+    end
+    end
+    end
+   # lo
+
 
     def diff
       puts "RSS load"
@@ -272,7 +298,7 @@ class PagesController < ApplicationController
     end
 
   def load1
-    feeds = Feed.order("created_at DESC")
+    feeds = Feed.rss.order("created_at DESC")
     feeds.each do |f|
       feed = FetchFeed.new(f)
       logger.info f.name
@@ -505,7 +531,7 @@ end
   end
 
   def tag_cloud
-       # @tags = Tags.all.order('count DESC')
+    @tags =  ActsAsTaggableOn::Tag.all.order('count DESC')
   end
 
 

@@ -1,15 +1,13 @@
 .container
   %h1 Listing Feeds
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Name
-        %th Url
-    - @feeds.each do |feed|
-      %tr
-        %td= feed.name
-        %td= feed.url
-        %td= link_to 'Show', feed, class:  'btn btn-default'
-        %td= link_to 'Edit', edit_feed_path(feed), class:  'btn btn-default'
-        %td= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' }, class:  'btn btn-danger'
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#tab_rss"} RSS
+    %li
+      %a{"data-toggle" => "tab", :href => "#tab_tweets"} Tweets
+    .tab-content
+      #tab_rss.tab-pane.fade.in.active.col.s12
+        = render "tab_rss", feeds: @feeds.rss
+      #tab_tweets.tab-pane.fade.in.col.s12
+        = render "tab_rss", feeds: @feeds.tweets
   = link_to 'New Feed', new_feed_path, class:  'btn btn-info'

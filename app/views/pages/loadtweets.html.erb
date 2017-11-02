@@ -1,0 +1,7 @@
+<%= @tweets.each do |tweet| %>
+  <div>
+  <% i=0 %>
+  <%= i.to_s<<'.'<<tweet.text if tweet.is_a?(Twitter::Tweet) %>
+  <% i=++1 %>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+.container
+  %h1 Listing channels
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Action
+    - @channels.each do |channel|
+      %tr
+        .row
+          .col-sm-4
+            %td= link_to channel.name, channs_path(channel.id), class: 'btn btn-info'
+        .row
+          .col-sm-4
+            %td
+              = link_to 'Show', channel, class:  'btn btn-default'
+              = link_to 'Edit', edit_chann_path(channel), class:  'btn btn-default'
+              = link_to 'Destroy', channel, :method => :delete, :data => { :confirm => 'Are you sure?' }, class:  'btn btn-danger'
+  = link_to 'New Channel', new_chann_path, class:  'btn btn-info'
+= paginate(@channels)

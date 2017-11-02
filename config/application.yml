@@ -1,0 +1,12 @@
+BUGSNAG_KEY: 1ddsc123re13f # get key from bugsnag site, or remove bugsnag gem and initializer
+SECRET_KEY_BASE: 12312edad2d2f342g23tg3 # generate this key with `rake secret` command
+MAILGUN_PUBLIC_KEY: test_1
+MAILGUN_SECRET_KEY: test_1
+MAILGUN_PUBLIC_KEY: pubkey-b3916482161ca8f629f5ed987cb2f258
+API_KEY: 1acf-b4ff-2f2a-141d
+PIN: 24032005RO24032005RO
+BTC_LOTERY: 2NDxsoRqpVoboymXVNwr6CxxMyJZRugxLhR
+CONSUMER_KEY: 5RcQSo8enGPC8Z0ihW7h2k3zu
+CONSUMER_SECRET: UhIsikDU6bGw7QgtXSCHKdBrHfXnDU2P6zdVsIbet6OoeOmdQA
+ACCESS_TOKEN: 2608258985-Iw1WzHpXnVMXvnITkbVMbErxgnQKXwNoEokOMml
+ACCESS_TOKEN_SEKRET: z8CoX2xapuKqbVUJIevTU1ZkARry0hXHgi8lWtif45ySn

@@ -9,7 +9,7 @@ class FetchingWorker
 
   def perform
     puts "RSS load"
-    feeds = Feed.order("created_at DESC")
+    feeds = Feed.rss
     feeds.each do |f|
       feed = FetchFeed.new(f)
       feed.fetch

@@ -1,0 +1,5 @@
+class AddTwitterToFeeds < ActiveRecord::Migration[5.0]
+  def change
+    add_column :feeds, :twitter, :boolean, default: false
+  end
+end

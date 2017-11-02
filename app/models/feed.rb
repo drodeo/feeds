@@ -29,7 +29,8 @@ class Feed < ApplicationRecord
   validates_attachment_content_type :icon, size: { in: 0..500.kilobytes }, content_type: /\Aimage\/.*\Z/
   #has_paper_trail
 
-  scope :rss, -> { where html: false }
+  scope :rss, -> { where twitter: false }
+  scope :tweets, -> {where twitter: true}
   scope :html,-> { where html: true }
 
   def self.fetch(id)

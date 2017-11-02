@@ -25,8 +25,7 @@ Rails.application.routes.draw do
 
 
 
-  #devise_for :users
-  # devise_for :users
+  resources :channs
   resources :tagoverlaps
   resources :tagexcepts
   resources :feeds do
@@ -44,12 +43,13 @@ Rails.application.routes.draw do
   get 'count_categories', to: 'categories#count_categories'
   get 'loadnews', to: 'pages#load'
   get 'loadnews1', to: 'pages#load1'
+  get 'loadtweets', to: 'pages#loadtweets'
   get 'analyze', to: 'pages#analyze'
   get 'addwindow', to: 'pages#addwindow'
  # get 'category/:category', to: 'pages#index', as: :category
   get 'ss', to: 'pages#index'
   get 'data', to: 'pages#index', as: :data
-  get 'atags', to: 'pages#atags', controller: 'tag'
+  get 'atags', to: 'tag#atags', controller: 'tag'
   get 'tag_cloud', to: 'pages#tag_cloud'
   get 'tags/:tag', to: 'pages#index', as: :tag
   # get 'data/:data', to: 'pages#index', as: :data
@@ -74,4 +74,5 @@ Rails.application.routes.draw do
   get 'sourceimport', to:   'feeds#sourceimport'
   get 'tagexceptexport',  controller: 'tag', to: 'tag#tagexceptexport'
   get 'tagexceptimport',  controller: 'tag', to: 'tag#tagexceptimport'
+
 end

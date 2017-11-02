@@ -1,3 +1,19 @@
+GIT
+  remote: https://github.com/sferik/twitter.git
+  revision: bc911e9106012aa0ef4d8b0b92ef05b880ed6da9
+  specs:
+    twitter (5.15.0)
+      addressable (~> 2.3)
+      buftok (~> 0.2.0)
+      equalizer (~> 0.0.11)
+      http (~> 2.0)
+      http-form_data (~> 1.0)
+      http_parser.rb (~> 0.6.0)
+      memoizable (~> 0.4.0)
+      multipart-post (~> 2.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -62,6 +78,7 @@ GEM
     bindex (0.5.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    buftok (0.2.0)
     builder (3.2.3)
     bullet (5.5.1)
       activesupport (>= 3.0.0)
@@ -126,6 +143,8 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.3)
     docile (1.1.5)
+    domain_name (0.5.20170404)
+      unf (>= 0.0.5, < 1.0.0)
     equalizer (0.0.11)
     erubis (2.7.0)
     et-orbi (1.0.4)
@@ -150,6 +169,8 @@ GEM
       loofah (>= 2.0)
       sax-machine (>= 1.0)
     ffi (1.9.18)
+    figaro (1.1.1)
+      thor (~> 0.14)
     font-awesome-rails (4.7.0.2)
       railties (>= 3.2, < 5.2)
     formatador (0.2.5)
@@ -194,6 +215,15 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
+    http (2.2.2)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
+    http-form_data (1.0.3)
+    http_parser.rb (0.6.0)
     i18n (0.8.4)
     ice_nine (0.11.2)
     jbuilder (2.7.0)
@@ -241,6 +271,8 @@ GEM
       skinny (>= 0.1.2)
       sqlite3-ruby
       thin
+    memoizable (0.4.2)
+      thread_safe (~> 0.3, >= 0.3.1)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -252,6 +284,7 @@ GEM
     multi_test (0.1.2)
     multipart-post (2.0.0)
     mustermann (1.0.0)
+    naught (1.1.0)
     nenv (0.3.0)
     nested_form (0.3.2)
     nio4r (2.1.0)
@@ -447,6 +480,7 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
+    simple_oauth (0.3.1)
     simplecov (0.14.1)
       docile (~> 1.1.0)
       json (>= 1.8, < 3)
@@ -507,6 +541,9 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.4)
     unicode-display_width (1.3.0)
     unicode_utils (1.4.0)
     uniform_notifier (1.10.0)
@@ -559,6 +596,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   feedjira
+  figaro
   formulaic
   friendly_id
   fuubar
@@ -611,6 +649,7 @@ DEPENDENCIES
   traceroute
   truncate_html
   turbolinks (~> 5)
+  twitter!
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)

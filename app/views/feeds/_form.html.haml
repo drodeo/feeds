@@ -7,8 +7,10 @@
     .form-group
       %label{:for => "name"} Url:
       = f.text_field :url, autofocus: true, class: 'form-control'
-    .form-group
-      = f.label :icon, class: 'col-sm-2 control-label'
+    .form-group-inline
+      = f.label :icon
       = f.file_field :icon
+      = f.label :twitter
+      = f.check_box :twitter, as: :boolean, boolean_style: :inline
     .form-actions
       = f.button :submit
