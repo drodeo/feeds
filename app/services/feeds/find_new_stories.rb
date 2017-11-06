@@ -15,7 +15,7 @@ class FindNewStories
 
     @raw_feed.entries.each do |story|
       break if @latest_entry_id && story.id == @latest_entry_id
-      next if story_age_exceeds_threshold?(story) || StoryRepository.exists?(story.id, @feed_id)
+      next if story_age_exceeds_threshold?(story) #|| StoryRepository.exists?(story.id, @feed_id)
       stories << story
     end
 
@@ -25,7 +25,7 @@ class FindNewStories
   private
 
   def story_age_exceeds_threshold?(story)
-    max_age = Time.now - STORY_AGE_THRESHOLD_DAYS.days
-    story.published && story.published < max_age
+    max_age = Time.now.utc - STORY_AGE_THRESHOLD_DAYS.days
+    story.published && story.published < max_age || story.published > Time.now.utc
   end
 end
