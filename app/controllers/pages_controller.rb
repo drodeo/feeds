@@ -51,6 +51,7 @@ class PagesController < ApplicationController
       # entry.url = normalize_url(entry.url, feed.url)
       @tweets.each do |tweet|
       entry=tweet.full_text.split('https')
+      next if entry[1].nil?
       Page.create(feed_id: f.id,
                   title: entry[0],
                   url: "https"<<entry[1],
