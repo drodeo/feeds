@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :detect_browser
+  before_filter :set_current_user
   before_filter :set_global_search_variable
+
 
   def detect_browser
     request.variant = case request.user_agent
@@ -23,4 +25,12 @@ class ApplicationController < ActionController::Base
   def set_global_search_variable
     @search = Page.search(params[:q])
   end
+
+
+  def set_current_user
+    User.current = current_user
+  end
+
 end
+
+

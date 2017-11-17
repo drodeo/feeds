@@ -1,96 +1,35 @@
-<% render_view %>
-<div class="table-responsive">
-<table class="table table-striped  table-condensed">
-  <thead>
-    <tr>
-      <th width="2%"> </th>
-      <th width="31%"> </th>
-      <th width="2%"> </th>
-      <th width="31%"> </th>
-      <th width="2%"> </th>
-      <th width="31%"> </th>
-     </tr>
-  </thead>
-  <tbody>
-
-  <% content_for :search do %>
-      <%= search_form_for @search do |f| %>
-          <%= f.text_field :title_cont, class: "radius-left expand", placeholder: "Поиск" %>
-          <%= f.submit "Поиск", class: "radius-right button" %>
-      <% end %>
-  <% end %>
-
-  <% @pages.includes(:feed).each_slice(3) do |a, b,c| %>
-  <% cache [a,b,c] do%>
-  <tr>
-    <td><h6><%= a.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
-    <td>
-      <% a.summary= " " if a.summary.blank? %>
-      <details>
-      <summary>
-        <% unless a.cnt_match.zero? %>
-        <span class="badge">
-           <%= link_to_unless(a.cnt_match.zero?, a.cnt_match, addwindow_path(a), target: "blank"){} %>
-        </span>
-        <% end %>
-        <%= link_to image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a.feed_id) unless a.feed.icon.blank? %>
-        <%=  link_to a.title, nil, 'href' => a.url , :target => "_blank" , title:  cut_summary(markdown(a.summary)) %>
-      </summary>
-       <div class=inline><%= image_tag(a.image, class: 'avatar', :size => "200") unless a.image.blank? %>
-         <%= cut_summary(markdown(a.summary)) %>
-       </div>
-    </details>
-    </td>
-    <% if b!=nil%>
-     <td> <h6><%= b.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
-     <td>
-      <% b.summary= " " if b.summary.blank? %>
-       <details>
-         <summary>
-         <% unless b.cnt_match.zero? %>
-             <span class="badge"><%= link_to  b.cnt_match, addwindow_path(b), target: "blank" %> </span>
-         <%end%>
-         <%= image_tag(b.feed.icon.url(:thumb), class: 'avatar1', :size => "20") unless b.feed.icon.blank? %> <%=  link_to b.title, nil, 'href' => b.url , :target => "_blank" , title: b.summary %> </h6></div></summary>
-         <%= image_tag(b.image, class: 'avatar2', :size => "200") unless b.image.blank?  %><%= markdown(b.summary) %>
-       </details>
-      <% end %>
-     </td>
-
-
-     <% if c!=nil%>
-       <td> <h6><%= c.published.to_time().in_time_zone("Moscow").strftime("%R") %></h6></td>
-       <td>
-         <% c.summary= " " if c.summary.blank? %>
-         <details>
-           <summary>
-                <% unless c.cnt_match.zero? %>
-                    <span class="badge"><%= link_to  c.cnt_match, addwindow_path(c), target: "blank" %> </span>
-                <%end%>
-                <%= image_tag(c.feed.icon.url(:thumb), class: 'avatar1', :size => "20") unless c.feed.icon.blank? %> <%=  link_to c.title, nil, 'href' => c.url , :target => "_blank" , title: c.summary %> </h6></div></summary>
-              <%= image_tag(c.image, class: 'avatar2', :size => "200") unless c.image.blank?  %><%= markdown(c.summary) %>
-            </details>
-      <% end %>
-      </td>
-
-
-
-
-
-
-
-
-    </tr>
-      <% end %>
+<% content_for :search do %>
+    <%= search_form_for @search do |f| %>
+        <%= f.text_field :title_cont, class: "radius-left expand", placeholder: "Поиск" %>
+        <%= f.submit "Поиск", class: "radius-right button" %>
     <% end %>
-   
- 
-  
-
-
-  </tbody>
-</table>	 
-
+<% end %>
+<% if current_user%>
+<ul class="nav nav-tabs">
+      <% @channs.each_with_index do |chann, index| %>
+          <% if index == 0 %>
+              <li class="active"><a href="#tab_<%=index.to_s%>" data-toggle="tab"><p><%= chann.name %></p></a></li>
+          <% else %>
+              <li><a href="#tab_<%=index.to_s%>" data-toggle="tab"><p><%= chann.name %></p></a></li>
+          <% end %>
+      <% end %>
+    </ul>
+    <div class="tab-content">
+      <% @channs.each_with_index do |chann, index| %>
+          <% if index == 0 %>
+              <div class="tab-pane fade in active" id="tab_<%=index.to_s%>">
+                <%= render  "index_form", pages: @pages.send(chann.slug.to_sym) %> %></p>
+              </div>
+          <% else %>
+              <div class="tab-pane fade" id="tab_<%=index.to_s%>">
+                <p><%=  render "index_form", pages: @pages.send(chann.slug.to_sym) %></p>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+    <%= paginate(@pages) %>
+<% else %>
+    <p><%=  render "index_form", pages: @pages %></p>
+    <%= paginate(@pages) %>
+<% end %>
 <%= paginate(@pages) %>
-<%#= javascript_include_tag 'input-group'%>
-</div>
-

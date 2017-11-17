@@ -74,5 +74,6 @@ Rails.application.routes.draw do
   get 'sourceimport', to:   'feeds#sourceimport'
   get 'tagexceptexport',  controller: 'tag', to: 'tag#tagexceptexport'
   get 'tagexceptimport',  controller: 'tag', to: 'tag#tagexceptimport'
-
+  get 'add_chann', to: 'channs#add_chann'
+  post 'add_feeds', to: 'channs#add_feeds'
 end

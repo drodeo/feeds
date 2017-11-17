@@ -4,5 +4,8 @@
     .form-group
       %label{:for => "name"} Channel name:
       = f.text_field :name, autofocus: true, class: 'form-control'
+      %label{:for => "slug"} Slug:
+      = f.text_field :slug, autofocus: true, class: 'form-control'
+      = f.hidden_field(:user_id, value: current_user.id)
     .form-actions
       = f.button :submit

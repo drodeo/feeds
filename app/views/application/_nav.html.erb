@@ -18,17 +18,6 @@
          <li class="right"><%= link_to 'Облако тэгов', tag_cloud_path %><span class="sr-only">(current)</span></a></li>
          <li class="right"><%= link_to 'Инфо', info_path %><span class="sr-only">(current)</span></a></li>
          <li class="right"><%= link_to 'Redis', redis_path %><span class="sr-only">(current)</span></a></li>
-         <% if user_signed_in? %>
-           <li class="dropdown">
-             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Каналы
-               <span class="caret"></span></a>
-               <ul class="dropdown-menu">
-                 <% Chann.all.each do |channel| %>
-                   <li class="right"><%= link_to channel.name, channel %><span class="sr-only">(current)</span></a></li>
-               </ul>
-            </li>
-      <% end %>
-      <% end %>
     </ul>
       <ul class="nav navbar-nav navbar-right">
        <% if user_signed_in? %>
@@ -38,7 +27,7 @@
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
                <li class="right"><%= link_to 'Каналы', channs_path %><span class="sr-only">(current)</span></a></li>
-               <li class="right"><%= link_to 'Добавить ленту в канал', infoday1_path %><span class="sr-only">(current)</span></a></li>
+               <li class="right"><%= link_to 'Добавить ленту в канал', add_chann_path %><span class="sr-only">(current)</span></a></li>
                <li role="separator" class="divider"></li>
                <li class="right"><%= link_to 'инфодей', infoday_path %><span class="sr-only">(current)</span></a></li>
                <li class="right"><%= link_to 'infoday1', infoday1_path %><span class="sr-only">(current)</span></a></li>

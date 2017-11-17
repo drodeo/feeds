@@ -16,6 +16,7 @@
 
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
+  before_filter :set_current_user
   require 'open-uri'
   require 'rubygems'
   require 'text'
@@ -457,11 +458,11 @@ end
 
   #@translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')
 
-
+    @channs=Chann.where(user_id: current_user.id) if current_user
     if params[:tag]
       @pages = Page.tagged_with(params[:tag]).order('published DESC').page(params[:page])
     elsif params[:id]
-      @pages = Page.where('source_id' => params['id']).order('published DESC').page(params[:page])
+      @pages = Page.where('feed_id' => params['id']).order('published DESC').page(params[:page])
     elsif params[:tags]
      @pages = Page.tagged_with(params[:tags]['tag']).order('published DESC').page(params[:page])
     elsif params[:q]
@@ -473,18 +474,11 @@ end
       @pages = Page.order('published DESC').page(params[:page])
     end
     sources = Feed.all
-    #FetchingWorker.perform_async(5.minutes)
-    #FetchNewsWorker.perform_async(sources,28.minutes)
-    #TagsWorker.perform_async(30.minutes)
-    #CategoryWorker.perform_async(62.minutes)
-    #InfodayWorker.perform_async(72.minutes)
-    #PagematchWorker.perform_async(30.minutes)
-    #TlgrmWorker.perform_async(25.minutes)
-    #loa
-   #@categories = Category.all.order('count DESC').limit(50)
-   #@search = Page.search(params[:q])
-   #@sources = Source.all
-    # @pages = @search.result.order('time DESC').page(params[:page])
+    if current_user
+      Chann.where(user_id: User.current.id).each do |s|
+        @pages.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
+      end
+    end
   end
 
   def redis

@@ -1,0 +1,30 @@
+= form_tag add_feeds_path do
+  .input-append
+    = collection_select :name, :id, @channels, :id, :name
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th{:width => "10%"} Фото
+        %th{:width => "38%"} Объявление
+        %th{:width => "2%"}
+        %th{:width => "10%"} Фото
+        %th{:width => "40%"}
+          %center Объявление
+        %th{:width => "2%"}
+    %h5 Последние объявления
+    - @feeds.each_slice(2) do |a, b|
+      %tr
+        %td
+          %h4= link_to h(a.name), feed_path(a.id)
+          %h6= link_to h(a.url), feed_path(a.id)
+        %td
+          = check_box_tag "feed_ids[]", a.id
+        - if b!=nil
+          %td
+            .icon= image_tag(b.icon.url(:thumb), class: 'avatar', :size => 15)
+          %td
+            %h4= link_to h(b.name), feed_path(b.id)
+            %h6= link_to h(b.url), feed_path(b.id)
+          %td
+            = check_box_tag "feed_ids[]", b.id
+  = submit_tag "Edit Checked", :class => 'btn btn-primary'

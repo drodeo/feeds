@@ -1,0 +1,18 @@
+.container
+  %ul.nav.nav-tabs
+    - @channs.size.times do |i|
+      - if i==0
+        %li.active
+          %a{"data-toggle" => "tab", href:  @channs[i][1]  } #{@channs[i][0]}
+      - else
+        %li
+          %a{"data-toggle" => "tab", href:  @channs[i][1]  } #{@channs[i][0]}
+  .tab-content
+    #tab_1.tab-pane.fade.in.active.col.s12
+      = render "index_form", pages: @pages.one
+    #tab_2.tab-pane.fade.in.col.s12
+      = render "index_form", pages: @pages.two
+    #tab_3.tab-pane.fade.in.col.s12
+      = render "index_form", pages: @pages.one
+    #tab_4.tab-pane.fade.in.col.s12
+      = render "index_form", pages: @pages.two

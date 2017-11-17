@@ -1,8 +1,13 @@
 class ChannsController < ApplicationController
   before_action :set_chann, only: [:show, :edit, :update, :destroy]
 
+  def add_chann
+    @feeds=Feed.all
+    @channels = Chann.where(user_id: current_user.id)
+  end
+
   def index
-    @channels = Chann.where(user_id: current_user.id).page(params[:page])
+    @channels = Chann.where(user_id: current_user.id)
   end
 
   def show
@@ -15,6 +20,17 @@ class ChannsController < ApplicationController
 
   def edit
     #@list=Category.pluck(:name,:id)
+  end
+
+  def add_feeds
+    channel = Chann.find(params[:name][:id])
+    str=''
+    params[:feed_ids].each do |p|
+      str<<p+','
+    end
+    #str=
+    channel.update( feed_ids: str)
+    redirect_to channel, notice: 'Channel was successfully created.'
   end
 
   def create
@@ -63,8 +79,6 @@ class ChannsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def chann_params
-    params.fetch(:category, {})
-    params.require(:chann).permit(:name, :user_id)
-    #category_params.merge(parent: params[:parent].to_i)
+    params.require(:chann).permit(:name, :user_id, :feed_ids, :slug)
   end
 end

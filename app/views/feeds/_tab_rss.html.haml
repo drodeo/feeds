@@ -5,7 +5,7 @@
       %th Url
   - feeds.each do |feed|
     %tr
-      %td= feed.name
+      %td= link_to feed.name, feed_feeds_path(feed.id)
       %td= feed.url
       %td= link_to 'Show', feed, class:  'btn btn-default'
       %td= link_to 'Edit', edit_feed_path(feed), class:  'btn btn-default'
