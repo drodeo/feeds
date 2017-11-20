@@ -20,13 +20,7 @@ class Pages::FeedsController < ApplicationController
 
   def index
     @pages = Page.where('feed_id' => params['feed_id']).order('published DESC').page(params[:page])
-    @channs=Chann.where(user_id: current_user.id) if current_user
-    if current_user
-      Chann.where(user_id: User.current.id).each do |s|
-        @pages.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
-      end
-    end
-    render 'pages/index'
+    render partial: 'pages/index_form', locals: {pages: @pages}
   end
 
 

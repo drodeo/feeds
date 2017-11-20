@@ -15,7 +15,7 @@ module PagesHelper
       rescue Feedjira::NoParserAvailable => e
         Rails.logger.error e.message<<' '<< a.url<<' '<< "no parser available"
         puts a.url, "no parser available"
-        nexе
+        next
       rescue StandardError=>e
         Rails.logger.error e.message
         puts e.message
