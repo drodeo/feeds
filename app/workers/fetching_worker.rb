@@ -9,8 +9,10 @@ class FetchingWorker
 
   def perform
     puts "RSS load"
+    puts Time.now
     feeds = Feed.rss
     feeds.each do |f|
+      puts f.name
       feed = FetchFeed.new(f)
       feed.fetch
     end
