@@ -11,46 +11,46 @@
         %th{:width => "31%"}
     %tbody
       - pages.includes(:feed).each_slice(3) do |a, b,c|
-        - cache [a,b,c] do
-          %tr
+        //#- cache [a,b,c] do
+        %tr
+          %td
+            %h6= a.published.to_time().in_time_zone("Moscow").strftime("%R")
+          %td
+            - a.summary= " " if a.summary.blank?
+            %details
+              %summary
+                - unless a.cnt_match.zero?
+                  %span.badge
+                    = link_to_unless(a.cnt_match.zero?, a.cnt_match, addwindow_path(a), target: "blank"){}
+                = link_to image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a.feed_id) unless a.feed.icon.blank?
+                = link_to a.title, nil, 'href' => a.url , :target => "_blank" , title:  cut_summary(markdown(a.summary))
+              .inline
+                = image_tag(a.image, class: 'avatar', :size => "200") unless a.image.blank?
+                = cut_summary(markdown(a.summary))
+          - if b!=nil
             %td
-              %h6= a.published.to_time().in_time_zone("Moscow").strftime("%R")
+              %h6= b.published.to_time().in_time_zone("Moscow").strftime("%R")
             %td
-              - a.summary= " " if a.summary.blank?
+              - b.summary= " " if b.summary.blank?
               %details
                 %summary
-                  - unless a.cnt_match.zero?
-                    %span.badge
-                      = link_to_unless(a.cnt_match.zero?, a.cnt_match, addwindow_path(a), target: "blank"){}
-                  = link_to image_tag(a.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a.feed_id) unless a.feed.icon.blank?
-                  = link_to a.title, nil, 'href' => a.url , :target => "_blank" , title:  cut_summary(markdown(a.summary))
-                .inline
-                  = image_tag(a.image, class: 'avatar', :size => "200") unless a.image.blank?
-                  = cut_summary(markdown(a.summary))
-            - if b!=nil
+                  - unless b.cnt_match.zero?
+                    %span.badge= link_to  b.cnt_match, addwindow_path(b), target: "blank"
+                  = image_tag(b.feed.icon.url(:thumb), class: 'avatar1', :size => "20") unless b.feed.icon.blank?
+                  = link_to b.title, nil, 'href' => b.url , :target => "_blank" , title: b.summary
+                = image_tag(b.image, class: 'avatar2', :size => "200") unless b.image.blank?
+                = markdown(b.summary)
+            - if c!=nil
               %td
-                %h6= b.published.to_time().in_time_zone("Moscow").strftime("%R")
+                %h6= c.published.to_time().in_time_zone("Moscow").strftime("%R")
               %td
-                - b.summary= " " if b.summary.blank?
+                - c.summary= " " if c.summary.blank?
                 %details
                   %summary
-                    - unless b.cnt_match.zero?
-                      %span.badge= link_to  b.cnt_match, addwindow_path(b), target: "blank"
-                    = image_tag(b.feed.icon.url(:thumb), class: 'avatar1', :size => "20") unless b.feed.icon.blank?
-                    = link_to b.title, nil, 'href' => b.url , :target => "_blank" , title: b.summary
-                  = image_tag(b.image, class: 'avatar2', :size => "200") unless b.image.blank?
-                  = markdown(b.summary)
-              - if c!=nil
-                %td
-                  %h6= c.published.to_time().in_time_zone("Moscow").strftime("%R")
-                %td
-                  - c.summary= " " if c.summary.blank?
-                  %details
-                    %summary
-                      - unless c.cnt_match.zero?
-                        %span.badge= link_to  c.cnt_match, addwindow_path(c), target: "blank"
-                      = image_tag(c.feed.icon.url(:thumb), class: 'avatar1', :size => "20") unless c.feed.icon.blank?
-                      = link_to c.title, nil, 'href' => c.url , :target => "_blank" , title: c.summary
-                    = image_tag(c.image, class: 'avatar2', :size => "200") unless c.image.blank?
-                    = markdown(c.summary)
+                    - unless c.cnt_match.zero?
+                      %span.badge= link_to  c.cnt_match, addwindow_path(c), target: "blank"
+                    = image_tag(c.feed.icon.url(:thumb), class: 'avatar1', :size => "20") unless c.feed.icon.blank?
+                    = link_to c.title, nil, 'href' => c.url , :target => "_blank" , title: c.summary
+                  = image_tag(c.image, class: 'avatar2', :size => "200") unless c.image.blank?
+                  = markdown(c.summary)
 = paginate(pages)

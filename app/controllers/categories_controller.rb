@@ -3,26 +3,26 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
 
   def index
-    @categories = Category.where(parent_id: 0).order("count DESC").page(params[:page])
+    @categories = Category.order("pages_count DESC").page(params[:page])
   end
 
   def show
   end
 
   def count_categories
-    @cats=Category.order("count DESC")
+    #//       cat.children.each do |c|
+    #//  cat.count += c.count
+    #//end
+    #//cat.save
+
+    @cats=Category.pluck(:id)
     @cats.each do |cat|
-      cat.count=Page.where(category_id: cat.id).count
-      cat.children.each do |c|
-        cat.count += c.count
-      end
-      cat.save
+      Category.reset_counters(cat, :pages)
     end
     cat1=Category.exists?('Без категории')
     @nocat=Page.where(category_id: nil)
     @nocat.update_all category_id: cat1.id
-    cat1.count=Page.where(category_id: cat1.id).count
-    cat1.save
+    Category.reset_counters(cat1.id, :pages)
   end
 
   # GET /categories/new

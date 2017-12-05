@@ -62,7 +62,7 @@ group :development do
   # gem 'libnotify', '~> 0.9.1'
   gem 'faker'
   gem 'shoulda'
-  gem 'cucumber-rails', require: false
+ # gem 'cucumber-rails', require: false
   gem 'pry'
   #gem 'database_cleaner'
   gem 'launchy'
@@ -74,10 +74,10 @@ group :development do
 end
 
 group :test do
-  gem "fuubar"
+  #gem "fuubar"
   # gem "capybara-webkit"
   gem "database_cleaner"
-  gem "formulaic"
+  #gem "formulaic"
   gem "shoulda-matchers"
   gem "simplecov", require: false
   gem "timecop"
@@ -91,11 +91,11 @@ gem 'pg'
 
 gem 'paperclip'
 
-gem 'will_paginate'
+#gem 'will_paginate'
 gem 'kaminari-bootstrap'
 gem 'simple_form'
 gem 'redcarpet'
-gem 'rails_admin'
+#gem 'rails_admin'
 gem 'yaml_db'
 gem 'friendly_id'
 gem 'babosa'
@@ -126,4 +126,6 @@ gem "ruby-stemmer"
 gem "tf-idf-similarity"
 gem 'twitter', github: 'sferik/twitter'
 gem 'figaro'
+gem 'trestle'
+gem 'trestle-auth'
 

@@ -4,18 +4,13 @@ class CategoryWorker
 
 
   def perform
-    @cats=Category.all
+    @cats=Category.pluck(:id)
     @cats.each do |cat|
-      cat.count=Page.where(category_id: cat.id).count
-      cat.save
-     # puts cat.name,cat.count
+      Category.reset_counters(cat, :pages)
     end
     cat1=Category.exists?('Без категории')
     @nocat=Page.where(category_id: nil)
     @nocat.update_all category_id: cat1.id
-    cat1.count=Page.where(category_id: cat1.id).count
-
-    cat1.save
-
+    Category.reset_counters(cat1.id, :pages)
   end
 end

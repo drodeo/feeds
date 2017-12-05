@@ -13,3 +13,7 @@ info_count:
 tweets:
   cron: "*/30 * * * *"
   class: "FetchingTweetsWorker"
+
+category_count:
+  cron: "* */6 * * *"
+  class: "CategoryWorker"

@@ -1,6 +1,5 @@
 .container
   %h1 Listing categories
-  = link_to 'Count Category', count_categories_path, class:  'btn btn-success'
   %table.table.table-striped
     %thead
       %tr
@@ -10,7 +9,7 @@
         %td= link_to category.name, category_categories_path(category.id), class: 'btn btn-info'
         %td
           &nbsp;
-          %span.badge.danger>=  category.count
+          %span.badge.danger>=  category.pages_count
         %td= link_to 'Show', category, class:  'btn btn-default'
         %td= link_to 'Edit', edit_category_path(category), class:  'btn btn-default'
         %td= link_to 'Destroy', category, :method => :delete, :data => { :confirm => 'Are you sure?' }, class:  'btn btn-danger'
