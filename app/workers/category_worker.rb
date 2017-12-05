@@ -4,9 +4,9 @@ class CategoryWorker
 
 
   def perform
-    @cats=Category.pluck(:id)
+    @cats=Category.where(pages_count: 0).pluck(:id)
     @cats.each do |cat|
-      Category.reset_counters(cat, :pages)
+      Category.find(cat).delete if  Category.reset_counters(cat, :pages).nil?
     end
     cat1=Category.exists?('Без категории')
     @nocat=Page.where(category_id: nil)
