@@ -6,10 +6,8 @@ class CategoryWorker
   def perform
     @cats=Category.where(pages_count: 0).limit(500).pluck(:id)
     @cats.each do |cat|
-      if  Category.reset_counters(cat, :pages).nil?
-        Category.find(cat).delete
-
-      end
+      tmp= Category.reset_counters(cat, :pages).nil?
+      Category.find(cat).delete if tmp.nil?
     end
     cat1=Category.exists?('Без категории')
     @nocat=Page.where(category_id: 0)
