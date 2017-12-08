@@ -20,7 +20,7 @@ class Pages::FeedsController < ApplicationController
 
   def index
     @pages = Page.where('feed_id' => params['feed_id']).order('published DESC').page(params[:page])
-    render partial: 'pages/index_form', locals: {pages: @pages}
+    render  'pages/_index_form', locals: {pages: @pages}
   end
 
 

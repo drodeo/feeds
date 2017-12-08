@@ -30,3 +30,4 @@
 <% else %>
     <p><%=  render "pages/index_form", pages: @pages %></p>
 <% end %>
+<%= paginate(@pages) %>
