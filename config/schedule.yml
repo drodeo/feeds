@@ -17,3 +17,7 @@ tweets:
 category_count:
   cron: "* */6 * * *"
   class: "CategoryWorker"
+
+tags_pages:
+  cron: "*/5 * * * *"
+  class: "TagsWorker"
