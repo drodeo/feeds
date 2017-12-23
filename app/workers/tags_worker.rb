@@ -4,7 +4,7 @@ class TagsWorker
   include Sidekiq::Status::Worker
 
 
-  def perform(count)
+  def perform
     puts "Work with tags"
     @pages = Page.left_joins(:taggings).where(taggings: {taggable_id: nil}).limit(1000)
     ActsAsTaggableOn.delimiter = [' ', ',']
