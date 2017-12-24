@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205164532) do
+ActiveRecord::Schema.define(version: 20171224114335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20171205164532) do
     t.string   "language"
     t.string   "taggs",               default: ""
     t.boolean  "twitter",             default: false
+    t.integer  "pages_count",         default: 0
   end
 
   create_table "infos", force: :cascade do |t|

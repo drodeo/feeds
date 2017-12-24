@@ -19,7 +19,7 @@
 #
 
 class Page < ActiveRecord::Base
-  belongs_to :feed, touch: true
+  belongs_to :feed, counter_cache: true, touch: true
   belongs_to :category, counter_cache: true
   validates  :title, presence: true
   validates  :published,  presence: true
@@ -30,13 +30,6 @@ class Page < ActiveRecord::Base
 
   scope :nodup, -> { where dupl: false }
 
-  #if User.current
- # Chann.where(user_id: User.current.id).each do |s|
-  #  scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
-  #end
- # end
-  scope :one, -> { where feed_id: 49 }
-  scope :two, -> { where feed_id: 51 }
 
   def user
    # user ||= User.find_by_id(session[:user_id])

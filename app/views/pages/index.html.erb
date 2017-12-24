@@ -4,6 +4,7 @@
         <%= f.submit "Поиск", class: "radius-right button" %>
     <% end %>
 <% end %>
+
 <% if current_user%>
 <ul class="nav nav-tabs">
       <% @channs.each_with_index do |chann, index| %>
@@ -30,4 +31,3 @@
 <% else %>
     <p><%=  render "pages/index_form", pages: @pages %></p>
 <% end %>
-<%= paginate(@pages) %>

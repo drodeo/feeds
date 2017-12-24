@@ -21,10 +21,10 @@
  <div class="container-fluid">
     <%= render "nav" %>
    <div class="row">
-     <div class="col-sm-4" text-left>
+     <div class="col-sm-4 text-left">
        <b><%= Time.zone.now().strftime("%T") %></b>
      </div>
-     <div class="col-sm-8 text-right">
+     <div class="col-sm-8-4 text-right">
      <%= yield(:search) %>
      </div>
    </div>
@@ -53,7 +53,7 @@
               <%= yield %>
 
 			    <%= debug(params) if Rails.env.development? %>
-          <%= $cnt if Rails.env.development? %>
+
           </div>
 
 
