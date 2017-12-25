@@ -471,7 +471,7 @@ end
     elsif params[:format]
       @pages = Page.where('source_id' => params['format']).order('published DESC').page(params[:page])
     else
-      @pages = Page.order('published DESC').page(1).per(99)
+      @pages = Page.order('published DESC').page.per(600)
     end
     sources = Feed.all
     if current_user

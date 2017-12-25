@@ -11,13 +11,13 @@
           %h4 Категории
           - Category.order(pages_count: :desc).limit(15).each do |cat|
             %h6
-              = link_to cat.name, cat
+              = link_to cat.name, category_categories_path(cat.id)
               = cat.pages_count
           %h4 Источники
-          - Feed.order(pages_count: :desc).limit(15).each do |ss|
+          - Feed.order(pages_count: :desc).limit(15).each do |feed|
             %h6
-              = link_to ss.name, ss_path(ss.id)
-              = ss.pages_count
+              = link_to feed.name, feed_feeds__path(feed.id)
+              = feed.pages_count
         %td
           .table-responsive
             %table.table.table-striped.table-condensed
