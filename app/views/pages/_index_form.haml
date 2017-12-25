@@ -16,7 +16,7 @@
           %h4 Источники
           - Feed.order(pages_count: :desc).limit(15).each do |feed|
             %h6
-              = link_to feed.name, feed_feeds__path(feed.id)
+              = link_to feed.name, feed_feeds_path(feed.id)
               = feed.pages_count
         %td
           .table-responsive
