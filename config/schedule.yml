@@ -6,10 +6,6 @@ fetch_pages:
   cron: "*/20 * * * *"
   class: "FetchingWorker"
 
-info_count:
-  cron: "* */12 * * *"
-  class: "InfodayWorker"
-
 tweets:
   cron: "*/30 * * * *"
   class: "FetchingTweetsWorker"
@@ -19,5 +15,5 @@ category_count:
   class: "CategoryWorker"
 
 tags_pages:
-  cron: "*/5 * * * *"
+  cron: "*/15 * * * *"
   class: "TagsWorker"
