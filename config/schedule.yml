@@ -1,7 +1,3 @@
-#category_count:
-#  cron: "* */1 * * *"
-#  class: "CategoryWorker"
-
 fetch_pages:
   cron: "*/20 * * * *"
   class: "FetchingWorker"
@@ -17,3 +13,7 @@ category_count:
 tags_pages:
   cron: "*/15 * * * *"
   class: "TagsWorker"
+
+categories_delete:
+  cron: "*/9 * * * *"
+  class: "CategoryDeleteWorker"
