@@ -10,7 +10,7 @@ class CategoryDeleteWorker
       cat1=Category.where(name: 'Без категории')
       @pages=Page.where(category_id: tmp.id)
       @pages.update_all(category_id: cat1.first.id)
-      Category(cat.id).delete
+      tmp.delete
     end
   end
 end
