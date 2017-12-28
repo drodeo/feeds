@@ -11,7 +11,7 @@ class CategoryWorker
 
     feeds=Feed.limit(500).pluck(:id)
     feeds.each do |feed|
-      Feed.reset_counters(feed, :pages)
+     Feed.reset_counters(feed, :pages)
     end
   end
 end
