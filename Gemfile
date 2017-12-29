@@ -95,7 +95,7 @@ gem 'paperclip'
 gem 'kaminari-bootstrap'
 gem 'simple_form'
 gem 'redcarpet'
-#gem 'rails_admin'
+gem 'rails_admin'
 gem 'yaml_db'
 gem 'friendly_id'
 gem 'babosa'
@@ -126,6 +126,5 @@ gem "ruby-stemmer"
 gem "tf-idf-similarity"
 gem 'twitter', github: 'sferik/twitter'
 gem 'figaro'
-gem 'trestle'
-gem 'trestle-auth'
+
 
