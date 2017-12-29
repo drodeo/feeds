@@ -4,14 +4,14 @@ class CategoryWorker
 
 
   def perform
-    cats=Category.where("pages_count >'100'").order(pages_count: :asc).limit(100).pluck(:id)
+    cats=Category.where("pages_count >'100'").order(pages_count: :desc).limit(100).pluck(:id)
     cats.each do |cat|
-      puts tmp= Category.reset_counters(cat, :pages)
+      Category.reset_counters(cat, :pages)
     end
 
     feeds=Feed.limit(500).pluck(:id)
     feeds.each do |feed|
-      puts Feed.reset_counters(feed, :pages)
+      Feed.reset_counters(feed, :pages)
     end
   end
 end
