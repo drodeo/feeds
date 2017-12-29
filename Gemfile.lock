@@ -419,6 +419,7 @@ GEM
       rainbow (>= 2.2.2, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
+    ruby-prof (0.17.0)
     ruby-progressbar (1.9.0)
     ruby-stemmer (0.9.6)
     ruby_parser (3.10.1)
@@ -605,6 +606,7 @@ DEPENDENCIES
   redis-rails
   rspec-rails
   rubocop
+  ruby-prof
   ruby-stemmer
   sass-rails (~> 5.0)
   selenium-webdriver (~> 2.53)
