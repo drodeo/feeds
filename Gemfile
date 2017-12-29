@@ -126,5 +126,5 @@ gem "ruby-stemmer"
 gem "tf-idf-similarity"
 gem 'twitter', github: 'sferik/twitter'
 gem 'figaro'
-
+gem 'ruby-prof'
 
