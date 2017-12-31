@@ -75,6 +75,12 @@ def atags #add tags
   end
 
    def rtags # remove tags
+     tgs = Tagexcept.all.pluck(:name)
+     ActsAsTaggableOn::Tag.where(name: tgs).delete_all
+     ActsAsTaggableOn::Tagging.where(tag_id: ActsAsTaggableOn::Tag.where(name: tgs)).delete_all
+   end
+=begin
+
    tgs = Tagexcept.all
    tgsovlp = Tagoverlap.all
    tgs.each do |pt|
@@ -83,6 +89,8 @@ def atags #add tags
     ActsAsTaggableOn::Tagging.where(tag_id: result).delete_all
      ActsAsTaggableOn::Tag.where(name: pt.name).delete_all
    end
+=end
+=begin
     tgsovlp.each do |pt1|
         result = ActsAsTaggableOn::Tag.where(name: pt1.name)
     result1 = ActsAsTaggableOn::Tag.where(name: pt1.nametarget)
@@ -110,5 +118,5 @@ def atags #add tags
    end
   
   end
-
+=end
 end

@@ -38,6 +38,28 @@ class PagesController < ApplicationController
   include PagesHelper
   TWODAYS = 2*24*60*60
 
+  def feature
+    str=''
+    ttags=Tagexcept.pluck(:name)
+    ActsAsTaggableOn.delimiter = [' ', ',']
+    cats=Category.where("pages_count >'100'").order(pages_count: :desc).limit(20).pluck(:id)
+    cats.each do |cat|
+    tmp44 = Page.where(category_id: cat).left_joins(:taggings).limit(3500).pluck(:id).uniq
+    puts "ARRAY",tmp44.size
+    ss=ActsAsTaggableOn::Tag.left_joins(:taggings).where('taggings.taggable_id IN (?)', tmp44).order('tags.taggings_count desc').uniq.limit(100)
+    ss.each  do |x|
+      str<<x.name<<' '
+    end
+    DictCategory.create!(category_id: cat, dict: str )
+  end
+  end
+
+def feature1
+  dicts=DictCategory.all
+
+end
+
+
   def loadtweets
     client = Twitter::REST::Client.new do |config|
       config.consumer_key        = ENV['CONSUMER_KEY']

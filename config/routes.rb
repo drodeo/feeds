@@ -76,4 +76,5 @@ Rails.application.routes.draw do
   get 'tagexceptimport',  controller: 'tag', to: 'tag#tagexceptimport'
   get 'add_chann', to: 'channs#add_chann'
   post 'add_feeds', to: 'channs#add_feeds'
+  get 'feature', to: 'pages#feature'
 end
