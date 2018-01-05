@@ -1,0 +1,2 @@
+class DictCategory < ApplicationRecord
+end

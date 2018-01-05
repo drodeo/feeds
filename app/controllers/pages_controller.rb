@@ -44,20 +44,107 @@ class PagesController < ApplicationController
     ActsAsTaggableOn.delimiter = [' ', ',']
     cats=Category.where("pages_count >'100'").order(pages_count: :desc).limit(20).pluck(:id)
     cats.each do |cat|
-    tmp44 = Page.where(category_id: cat).left_joins(:taggings).limit(3500).pluck(:id).uniq
-    puts "ARRAY",tmp44.size
-    ss=ActsAsTaggableOn::Tag.left_joins(:taggings).where('taggings.taggable_id IN (?)', tmp44).order('tags.taggings_count desc').uniq.limit(100)
-    ss.each  do |x|
-      str<<x.name<<' '
+      tmp44 = Page.where(category_id: cat).left_joins(:taggings).limit(3500).pluck(:id).uniq
+      puts "ARRAY",tmp44.size
+      ss=ActsAsTaggableOn::Tag.left_joins(:taggings).where('taggings.taggable_id IN (?)', tmp44).order('tags.taggings_count desc').uniq.limit(100)
+      #ss=ss.gsub(/[\d\,\.\?\!\:\;\"\-\']/, "").downcase.split-ttags
+      ss.each  do |x|
+        str<<x.name.gsub(/[\d\,\.\?\!\:\;\"\-\']/, "").downcase.split-ttags<<' '
+      end
+      DictCategory.create!(category_id: cat, dict: str )
     end
-    DictCategory.create!(category_id: cat, dict: str )
-  end
   end
 
 def feature1
+  ttags=Tagexcept.pluck(:name)
   dicts=DictCategory.all
+  corpus=[]
+  cat=Category.where(name: 'Без категории').first
+  pages = Page.where(category_id: cat).order('created_at DESC').limit(100)
+  mpages=DictCategory.limit(16).pluck(:dict)
+  mpages.each do |ss|
+    doc = TfIdfSimilarity::Document.new(ss)
+    corpus << doc
+  end
+  pages.each do |s|
 
-end
+    spl=s.title.split
+=begin
+    if spl[2].nil?
+      mpages=Page.order('created_at ASC').where("taggs LIKE '%#{spl[0]}%' or taggs LIKE '%#{spl[1]}%'")
+    elsif  spl[1].nil?
+      mpages=Page.order('created_at ASC').where("taggs LIKE '%#{spl[0]}%'")
+    elsif  spl[0].nil?
+      next
+    else
+      mpages=Page.order('created_at ASC').where("taggs LIKE '%#{spl[0]}%' or taggs LIKE '%#{spl[1]}%' or taggs LIKE '%#{spl[2]}%'")
+    end
+    #binding.pry
+    next  if mpages.length==1
+    #binding.pry
+=end
+    s1=Lingua.stemmer( s.title.gsub(/[\d\,\.\?\!\:\;\"\-\']/, "").downcase.split-ttags, :language => "ru" )
+    #lo
+    s2=''
+    for i in (0..s1.length-1) do
+      #  break if i>2
+      s2 << s1[i]+" "
+    end
+
+    if s.taggs.blank? #если колво меньше 3 исправить
+
+      for i in (0..s1.length-1) do
+        break if i>2
+        s.taggs << s1[i]+" "
+      end
+
+
+      s.save
+    end
+    corpus<< TfIdfSimilarity::Document.new(s2)
+
+    model = TfIdfSimilarity::TfIdfModel.new(corpus)
+    matrix = model.similarity_matrix
+
+    i=0
+      for j in 0..corpus.length-1 do
+        if matrix[i,j]>0.5 && matrix[i,j]<0.998 && i<j
+          puts matrix[i,j]
+          puts i
+          puts j
+=begin
+          puts mpages[i].title
+          puts mpages[j].title
+          q=Pagematch.find_by(page_id: mpages[i].title)
+          if q.nil?
+            pm=Pagematch.new
+            pm.page_id=mpages[i].id
+            pm.match_id=mpages[j].id
+            pm.koef=matrix[i,j]
+            sss1 = Page.find(mpages[i].id)
+            sss2=Page.find(mpages[j].id)
+            sss1.flag_match=true
+            if sss1.cnt_match.nil?
+              sss1.cnt_match=1
+            else
+              sss1.cnt_match+=1
+            end
+            sss1.dupl=false
+            sss2.dupl=true
+            #lo
+            #if sss1.dupl && !sss2.dupl
+            #  sss1.dupl=false
+            #else
+            #  sss1.dupl=true
+            #end
+=end
+            #end
+          end
+        end
+      #end
+    end
+  end
+
 
 
   def loadtweets

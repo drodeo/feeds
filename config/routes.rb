@@ -77,4 +77,5 @@ Rails.application.routes.draw do
   get 'add_chann', to: 'channs#add_chann'
   post 'add_feeds', to: 'channs#add_feeds'
   get 'feature', to: 'pages#feature'
+  get 'feature1', to: 'pages#feature1'
 end

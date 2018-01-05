@@ -8,11 +8,9 @@ class CategoryDeleteWorker
     cat1=Category.where(name: 'Без категории').pluck(:id)
     cats.each do |cat|
       tmp= Category.find(cat)
-      @pages=Page.where(category_id: tmp.id)
-      @pages.update_all(category_id: cat1)
+      Page.where(category_id: tmp.id).update_all(category_id: cat1[0])
       tmp.delete
     end
-    @pages=Page.where(category_id: nil).update_all(category_id: cat1)
-    @pages=Page.where(category_id: 0).update_all(category_id: cat1)
+    @pages=Page.where(category_id: nil).update_all(category_id: cat1[0])
   end
 end
