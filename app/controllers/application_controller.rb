@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :detect_browser
-  before_filter :set_current_user
-  before_filter :set_global_search_variable
+  before_action :set_current_user
+  before_action :set_global_search_variable
 
 
   def detect_browser

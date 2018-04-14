@@ -16,7 +16,7 @@
 
 class PagesController < ApplicationController
   before_action :set_page, only: [:show, :edit, :update, :destroy]
-  before_filter :set_current_user
+  before_action :set_current_user
   require 'open-uri'
   require 'rubygems'
   require 'text'
@@ -580,12 +580,12 @@ end
     elsif params[:format]
       @pages = Page.where('source_id' => params['format']).order('published DESC').page(params[:page])
     else
-      @pages = Page.order('published DESC').page.per(600)
+      @pages = Page.order('published DESC').includes(:feed).page.per(600)
     end
     sources = Feed.all
     if current_user
       Chann.where(user_id: User.current.id).each do |s|
-        @pages.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
+        @pages.includes(:feed).scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
       end
     end
   end

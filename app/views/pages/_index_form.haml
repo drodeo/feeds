@@ -30,7 +30,7 @@
                   %th{:width => "2%"}
                   %th{:width => "31%"}
               %tbody
-                - pages.includes(:feed).each_slice(3) do |a, b,c|
+                - pages.each_slice(3) do |a, b,c|
                   //#- cache [a,b,c] do
                   %tr
                     %td
@@ -77,4 +77,4 @@
                             .inline
                               = image_tag(c.image, class: 'avatar', :size => "200") unless c.image.blank?
                               = cut_summary(markdown(c.summary))
-= paginate(pages)
+//= paginate(pages)

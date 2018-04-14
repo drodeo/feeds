@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.2'
+gem 'rails'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -92,7 +92,7 @@ gem 'pg'
 gem 'paperclip'
 
 #gem 'will_paginate'
-gem 'kaminari-bootstrap'
+gem 'kaminari'
 gem 'simple_form'
 gem 'redcarpet'
 gem 'rails_admin'
