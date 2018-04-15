@@ -585,7 +585,7 @@ end
     sources = Feed.all
     if current_user
       Chann.where(user_id: User.current.id).each do |s|
-        @pages.includes(:feed).scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
+        Page.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
       end
     end
   end

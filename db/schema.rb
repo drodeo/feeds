@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229192640) do
+ActiveRecord::Schema.define(version: 20180415153323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,8 @@ ActiveRecord::Schema.define(version: 20171229192640) do
     t.boolean  "flag_match",  default: false
     t.boolean  "dupl",        default: false
     t.string   "entry_id",    default: ""
+    t.index ["published"], name: "index_pages_on_published", order: { published: :desc }, using: :btree
+    t.index ["published"], name: "pages_published_index", order: { published: :desc }, using: :btree
     t.index ["url"], name: "index_pages_on_url", unique: true, using: :btree
   end
 

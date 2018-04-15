@@ -6,7 +6,7 @@
 <% end %>
 
 <% if current_user%>
-<ul class="nav nav-tabs">
+  <ul class="nav nav-tabs">
       <% @channs.each_with_index do |chann, index| %>
           <% if index == 0 %>
               <li class="active"><a href="#tab_<%=index.to_s%>" data-toggle="tab"><p><%= chann.name %></p></a></li>
@@ -14,12 +14,12 @@
               <li><a href="#tab_<%=index.to_s%>" data-toggle="tab"><p><%= chann.name %></p></a></li>
           <% end %>
       <% end %>
-    </ul>
+  </ul>
     <div class="tab-content">
       <% @channs.each_with_index do |chann, index| %>
           <% if index == 0 %>
               <div class="tab-pane fade in active" id="tab_<%=index.to_s%>">
-                <%= render  "pages/index_form", pages: @pages.send(chann.slug.to_sym) %> </p>
+                <%= render  "pages/index_form", pages:  @pages.send(chann.slug.to_sym)%> </p>
               </div>
           <% else %>
               <div class="tab-pane fade" id="tab_<%=index.to_s%>">

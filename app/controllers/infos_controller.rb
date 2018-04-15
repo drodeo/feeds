@@ -32,8 +32,8 @@ class InfosController < ApplicationController
     def infoday
 
      @pages = Page.where.not(published: nil ).count
-     @tags = ActsAsTaggableOn::Tag.all.count
-     @taggings = ActsAsTaggableOn::Tagging.all.count
+     @tags = ActsAsTaggableOn::Tag.count
+     @taggings = ActsAsTaggableOn::Tagging.count
      @source = Feed.all.count
      @info=Info.first || Info.new
      @info.page_count=@pages
