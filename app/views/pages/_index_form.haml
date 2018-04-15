@@ -9,12 +9,12 @@
       %tr
         %td
           %h4 Категории
-          - Category.order(pages_count: :desc).limit(15).each do |cat|
+          - @categories.each do |cat|
             %h6
               = link_to cat.name, category_categories_path(cat.id)
               = cat.pages_count
           %h4 Источники
-          - Feed.order(pages_count: :desc).limit(15).each do |feed|
+          - @feeds.each do |feed|
             %h6
               = link_to feed.name, feed_feeds_path(feed.id)
               = feed.pages_count

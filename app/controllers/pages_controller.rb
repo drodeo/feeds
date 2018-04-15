@@ -568,6 +568,8 @@ end
   #@translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')
 
     @channs=Chann.where(user_id: current_user.id) if current_user
+    @categories = Category.order(pages_count: :desc).limit(15)
+    @feeds = Feed.order(pages_count: :desc).limit(15)
     if params[:tag]
       @pages = Page.tagged_with(params[:tag]).order('published DESC').page(params[:page])
     elsif params[:id]
@@ -580,7 +582,7 @@ end
     elsif params[:format]
       @pages = Page.where('source_id' => params['format']).order('published DESC').page(params[:page])
     else
-      @pages = Page.order('published DESC').includes(:feed).page.per(600)
+      @pages = Page.order('published DESC').includes(:feed).page.per(210)
     end
     sources = Feed.all
     if current_user
