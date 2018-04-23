@@ -4,10 +4,10 @@ class InfodayWorker
 
 
   def perform
-    @pages = Page.all.count
-    @tags = ActsAsTaggableOn::Tag.all.count
-    @taggings = ActsAsTaggableOn::Tagging.all.count
-    @source = Feed.all.count
+    @pages = Page.where.not(published: nil ).count
+    @tags = ActsAsTaggableOn::Tag.where(taggings_count: !0).count
+    @taggings = ActsAsTaggableOn::Tagging.where(taggable_type: "Page").count
+    @source = Feed.count
     info=Info.first || Info.new
     info.page_count=@pages
     info.tag_count=@tags

@@ -19,6 +19,9 @@ class Pages::FeedsController < ApplicationController
 
 
   def index
+    @channs=Chann.where(user_id: current_user.id) if current_user
+    @categories = Category.order(pages_count: :desc).limit(15)
+    @feeds = Feed.order(pages_count: :desc).limit(15)
     @pages = Page.where('feed_id' => params['feed_id']).order('published DESC').page(params[:page])
     render  'pages/_index_form', locals: {pages: @pages}
   end

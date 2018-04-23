@@ -597,18 +597,18 @@ end
    @pages = $redis.get('pages')
 
     if @pages.nil?
-      @pages = Page.order('published DESC').page(params[:page]).to_json
+      @pages = Page.order('published DESC').limit(210).to_json
 
       $redis.set('pages', @pages)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
-      $redis.expire('pages', 17.minutes.to_i)
+      $redis.expire('pages', 10.minutes.to_i)
     end
     @pages = JSON.load @pages
 
 
     @sources = $redis.get('feeds')
     if @sources.nil?
-      @sources = Feed.all.to_json
+      @sources = Feed.to_json
       $redis.set('feeds', @sources)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
       $redis.expire('feeds', 5.hours.to_i)
