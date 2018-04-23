@@ -6,33 +6,24 @@ class InfosController < ApplicationController
   require 'csv'
 
   def info
-    @info=Info.first
-    #@pages = Page.all.count
-    #@tags = ActsAsTaggableOn::Tag.all.count
-    #@taggings = ActsAsTaggableOn::Tagging.all.count
-    #@source = Source.all.count
-   # @s = Source.all
-    #  @s.each do |source|
-    #  pages_count = source.pages.all.count
-    #  info=Info.new #if Info.find(source_id: source.id).nil?
-    #  info.size=pages_count
-    #  info.source_id=source.id
-    #  info.save
-    #  @pages = Page.uniq.pluck(:time)
-    #  @pages.each do |p|
-    #    puts p
-    #  end
-    # end
-      # loa
-    #TlgrmWorker.perform_async(25.minutes)
-    #TagsWorker.perform_async(30.minutes)
-    #PagematchWorker.perform_async(30.minutes)
+
+    @pages = Page.where.not(published: nil ).count
+    @tags = ActsAsTaggableOn::Tag.where.not(name: nil).count
+    @taggings = ActsAsTaggableOn::Tagging.where(taggable_type: "Page").count
+    @source = Feed.count
+    @info=Info.first || Info.new
+    @info.page_count=@pages
+    @info.tag_count=@tags
+    @info.tagging=@taggings
+    @info.size=@source
+    @info.save
+
   end
 
     def infoday
 
      @pages = Page.where.not(published: nil ).count
-     @tags = ActsAsTaggableOn::Tag.where(taggings_count: !0).count
+     @tags = ActsAsTaggableOn::Tag.where.not(name: nil).count
      @taggings = ActsAsTaggableOn::Tagging.where(taggable_type: "Page").count
      @source = Feed.count
      @info=Info.first || Info.new
