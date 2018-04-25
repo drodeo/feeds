@@ -127,4 +127,4 @@ gem "tf-idf-similarity"
 gem 'twitter', github: 'sferik/twitter'
 gem 'figaro'
 gem 'ruby-prof'
-
+gem 'bootsnap', '>= 1.1.0', require: false
