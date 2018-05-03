@@ -15,5 +15,9 @@ tags_pages:
   class: "TagsWorker"
 
 categories_delete:
-  cron: "*/9 * * * *"
+  cron: "* */4 * * *"
   class: "CategoryDeleteWorker"
+
+infos:
+  cron: "* */12 * * *"
+  class: "InfodayWorker"
