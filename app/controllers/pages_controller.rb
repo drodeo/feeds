@@ -608,7 +608,7 @@ end
 
     @sources = $redis.get('feeds')
     if @sources.nil?
-      @sources = Feed.to_json
+      @sources = Feed.all.to_json
       $redis.set('feeds', @sources)
       # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
       $redis.expire('feeds', 5.hours.to_i)

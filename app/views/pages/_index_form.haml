@@ -30,7 +30,7 @@
                   %th{:width => "2%"}
                   %th{:width => "31%"}
               %tbody
-                - pages.each_slice(3) do |a, b,c|
+                - pages.to_a.each_slice(3) do |a, b,c|
                   //#- cache [a,b,c] do
                   %tr
                     %td
