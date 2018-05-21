@@ -1,0 +1,142 @@
+%br/
+.table-responsive
+  %table.table.table-striped.table-condensed
+    %thead
+      %tr
+        %th{:width => "15%"}
+        %th{:width => "85%"}
+    %tbody
+      %tr
+        %td
+          %h4 Категории
+          - @categories.each do |cat|
+            %h6
+              = link_to cat.name, category_categories_path(cat.id)
+              = cat.pages_count
+          %h4 Источники
+          - @feeds.each do |feed|
+            %h6
+              = link_to feed.name, feed_feeds_path(feed.id)
+              = feed.pages_count
+        %td
+          .table-responsive
+            %table.table.table-striped.table-condensed
+              %thead
+                %tr
+                  %th{:width => "2%"}
+                  %th{:width => "31%"}
+                  %th{:width => "2%"}
+                  %th{:width => "31%"}
+                  %th{:width => "2%"}
+                  %th{:width => "31%"}
+              %tbody
+                - pages.each_slice(3) do |a, b,c|
+                  //#- cache [a,b,c] do
+                  %tr
+                    %td
+                      %h6= a["published"].to_time().in_time_zone("Moscow").strftime("%R")
+                    %td
+                      - a["summary"]= " " if a["summary"].blank?
+                      %details
+                        %summary
+                          - unless a['cnt_match'].zero?
+                            %span.badge
+                              = link_to_unless(a['cnt_match'].zero?, a['cnt_match'], addwindow_path(a), target: "blank"){}
+                          = link_to image_tag(@source[@rel[a['feed_id']]].icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(a['feed_id']) unless @source[@rel[a['feed_id']]].icon.url(:thumb).blank?
+                          = link_to a['title'], nil, 'href' => a['url'] , :target => "_blank" , title:  cut_summary(markdown(a["summary"]))
+                        .inline
+                          = image_tag(a['image'], class: 'avatar', :size => "200") unless a['image'].blank?
+                          = cut_summary(markdown(a["summary"]))
+                    - if b!=nil
+                      %td
+                        %h6= b["published"].to_time().in_time_zone("Moscow").strftime("%R")
+                      %td
+                        - b["summary"]= " " if b["summary"].blank?
+                        %details
+                          %summary
+                            - unless b['cnt_match'].zero?
+                              %span.badge
+                                = link_to_unless(b['cnt_match'].zero?, b['cnt_match'], addwindow_path(b), target: "blank"){}
+                            = link_to image_tag(@source[@rel[b['feed_id']]], class: 'avatar1', :size => "20"), feed_feeds_path(b['feed_id']) unless @source[@rel[b['feed_id']]].icon.blank?
+                            = link_to b['title'], nil, 'href' => b['url'] , :target => "_blank" , title:  cut_summary(markdown(b["summary"]))
+                          .inline
+                            = image_tag(b['image'], class: 'avatar', :size => "200") unless b['image'].blank?
+                            = cut_summary(markdown(b["summary"]))
+                    -#  - if c!=nil
+                    -#    %td
+                    -#      %h6= c.published.to_time().in_time_zone("Moscow").strftime("%R")
+                    -#    %td
+                    -#      - c.summary= " " if c.summary.blank?
+                    -#      %details
+                    -#        %summary
+                    -#          - unless c.cnt_match.zero?
+                    -#            %span.badge
+                    -#              = link_to_unless(c.cnt_match.zero?, c.cnt_match, addwindow_path(c), target: "blank"){}
+                    -#          = link_to image_tag(c.feed.icon.url(:thumb), class: 'avatar1', :size => "20"), feed_feeds_path(c.feed_id) unless c.feed.icon.blank?
+                    -#          = link_to c.title, nil, 'href' => c.url , :target => "_blank" , title:  cut_summary(markdown(c.summary))
+                    -#        .inline
+                    -#          = image_tag(c.image, class: 'avatar', :size => "200") unless c.image.blank?
+                    -#          = cut_summary(markdown(c.summary))
+//= paginate(pages)
+
+
+def index
+
+  #@translator = Yandex::Translator.new('trnsl.1.1.20160606T092333Z.48fc2e0ec17ebab3.69be4ac22af90838d34cb67de1e6dc0f2fe261c5')
+
+    @channs=Chann.where(user_id: current_user.id) if current_user
+    @categories = Category.order(pages_count: :desc).limit(15)
+    @feeds = Feed.order(pages_count: :desc).limit(15)
+    if params[:tag]
+      @pages = Page.tagged_with(params[:tag]).order('published DESC').page(params[:page])
+    elsif params[:id]
+      @pages = Page.where('feed_id' => params['id']).order('published DESC').page(params[:page])
+    elsif params[:tags]
+     @pages = Page.tagged_with(params[:tags]['tag']).order('published DESC').page(params[:page])
+    elsif params[:q]
+     @search = Page.search(params[:q])
+     @pages = @search.result.order('published DESC').page(params[:page])
+    elsif params[:format]
+      @pages = Page.where('source_id' => params['format']).order('published DESC').page(params[:page])
+    else
+      @source = Feed.all
+      @pages = $redis.get('pages')
+
+      if @pages.nil?
+        @pages = Page.order('published DESC').limit(1210).to_json
+
+        $redis.set('pages', @pages)
+        # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
+        $redis.expire('pages', 10.minutes.to_i)
+      end
+      @pages = JSON.load @pages
+      @sources = JSON.load $redis.get('feeds')
+      if @sources.nil?
+        @sources = Feed.all.to_json
+        $redis.set('feeds', @sources)
+        # Expire the cache, reorder('time DESC').page(params[:page]).very 5 hours
+        $redis.expire('feeds', 5.hours.to_i)
+      end
+      #@sources = JSON.load @sources
+      @rel = $redis.hget(@rel,'rel')
+
+      if @rel.nil?
+        @rel=Hash.new
+        i=0
+        @sources.each do |c|
+          @rel[i]=c['id']
+          $redis.hset( @rel ,'rel', c['id'])
+          i+=1
+        end
+
+        @rel=@rel.invert
+        $redis.expire('rel', 5.hours.to_i)
+      end
+    end
+    #sources = Feed.all
+    if current_user
+      Chann.where(user_id: User.current.id).each do |s|
+        Page.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
+      end
+    end
+  end
