@@ -15,7 +15,15 @@
 #  type                :text
 #  html                :boolean
 #  source              :string
-#  last_update_on_time :integer          default("0")
+#  last_update_on_time :integer          default(0)
+#  last_fetched        :datetime
+#  standard            :boolean
+#  parent              :integer          default(0)
+#  language            :string
+#  taggs               :string           default("")
+#  twitter             :boolean          default(FALSE)
+#  pages_count         :integer          default(0)
+#  page_id             :integer
 #
 
 require 'rails_helper'

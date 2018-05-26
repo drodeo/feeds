@@ -581,15 +581,19 @@ end
      @pages = @search.result.order('published DESC').page(params[:page])
     elsif params[:format]
       @pages = Page.where('source_id' => params['format']).order('published DESC').page(params[:page])
+    elsif params[:chann_id]
+      s = Chann.find(params[:chann_id])
+      Page.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
+      @pages = Page.send(s.slug.to_sym).order('published DESC').page.per(210)
     else
       @pages = Page.order('published DESC').includes(:feed).page.per(210)
     end
-    sources = Feed.all
-    if current_user
-      Chann.where(user_id: User.current.id).each do |s|
-        Page.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
-      end
-    end
+    #sources = Feed.all
+    # if current_user
+    #   Chann.where(user_id: User.current.id).each do |s|
+    #     Page.scope s.slug.to_sym, -> {where feed_id: s.feed_ids.split(',') }
+    #   end
+    # end
   end
 
   def redis

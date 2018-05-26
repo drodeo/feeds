@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180415153323) do
+ActiveRecord::Schema.define(version: 20180522103621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,8 @@ ActiveRecord::Schema.define(version: 20180415153323) do
     t.string   "taggs",               default: ""
     t.boolean  "twitter",             default: false
     t.integer  "pages_count",         default: 0
+    t.integer  "page_id"
+    t.index ["page_id"], name: "index_feeds_on_page_id", using: :btree
   end
 
   create_table "infos", force: :cascade do |t|
@@ -111,6 +113,7 @@ ActiveRecord::Schema.define(version: 20180415153323) do
     t.boolean  "flag_match",  default: false
     t.boolean  "dupl",        default: false
     t.string   "entry_id",    default: ""
+    t.index ["category_id"], name: "pages_category_id_index", using: :btree
     t.index ["published"], name: "index_pages_on_published", order: { published: :desc }, using: :btree
     t.index ["published"], name: "pages_published_index", order: { published: :desc }, using: :btree
     t.index ["url"], name: "index_pages_on_url", unique: true, using: :btree
@@ -172,4 +175,5 @@ ActiveRecord::Schema.define(version: 20180415153323) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "feeds", "pages"
 end
