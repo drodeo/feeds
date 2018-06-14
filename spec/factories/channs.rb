@@ -16,7 +16,7 @@
 #  feed_ids           :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :chann do
     user_id 1
     name "MyString"

@@ -16,7 +16,7 @@
 #  pages_count :integer          default(0)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :category do
     
   end

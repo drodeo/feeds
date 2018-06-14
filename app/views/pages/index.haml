@@ -1,3 +1,7 @@
+- content_for :search do
+  = search_form_for @search do |f|
+    = f.text_field :title_cont, class: "radius-left expand", placeholder: "Поиск"
+    = f.submit "Поиск", class: "radius-right button"
 %br/
 .table-responsive
   %table.table.table-striped.table-condensed

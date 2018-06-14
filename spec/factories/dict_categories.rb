@@ -9,7 +9,7 @@
 #  updated_at  :datetime         not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :dict_category do
     category_id 1
     dict "MyString"

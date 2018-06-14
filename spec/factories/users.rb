@@ -15,7 +15,7 @@
 #  last_sign_in_ip        :inet
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     
   end

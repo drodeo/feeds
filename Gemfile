@@ -8,8 +8,7 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
@@ -42,32 +41,22 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'annotate'
-end
-
-group :development do
-  # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  #gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   #gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'mailcatcher'
   gem 'rspec-rails'
-
-  # gem 'factory_girl'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'guard-rspec', '~> 4.6', '>= 4.6.4'
   gem 'selenium-webdriver', '~> 2.53'
   gem 'capybara', '~> 2.6', '>= 2.6.2'
-  # gem 'libnotify', '~> 0.9.1'
   gem 'faker'
-  gem 'shoulda'
  # gem 'cucumber-rails', require: false
   gem 'pry'
-  #gem 'database_cleaner'
+  gem 'database_cleaner'
   gem 'launchy'
   gem 'rails_best_practices', require: false
-  #gem 'rb-inotify', github: 'kvokka/rb-inotify', require: false
   gem 'rubocop', require: false
   #gem 'rubycritic', require: false
   gem 'traceroute'

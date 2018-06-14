@@ -19,7 +19,7 @@
 #  entry_id    :string           default("")
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :page do
     
   end

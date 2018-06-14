@@ -5,7 +5,7 @@ class Pages::CategoriesController < ApplicationController
     @categories = Category.order(pages_count: :desc).limit(15)
     @feeds = Feed.order(pages_count: :desc).limit(15)
     @pages = Page.where('category_id' => params['category_id']).order('published DESC').page(params[:page])
-    render  'pages/_index_form', locals: {pages: @pages}
+    render  'pages/index', locals: {pages: @pages}
   end
 
 

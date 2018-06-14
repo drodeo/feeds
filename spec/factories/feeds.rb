@@ -26,7 +26,7 @@
 #  page_id             :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :feed do
     
   end

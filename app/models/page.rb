@@ -20,8 +20,8 @@
 #
 
 class Page < ActiveRecord::Base
-  belongs_to :feed, counter_cache: true, touch: true
-  belongs_to :category, counter_cache: true
+  belongs_to :feed,  touch: true
+  belongs_to :category
   validates  :title, presence: true
   validates  :published,  presence: true
   validates :url, uniqueness: true # validates_uniqueness_of :title, conditions: -> { where.not(status: 'archived') }
