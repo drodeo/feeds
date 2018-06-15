@@ -10,6 +10,10 @@ category_count:
   cron: "* */6 * * *"
   class: "CategoryWorker"
 
+feeds_count:
+  cron: "* */6 * * *"
+  class: "FeedWorker"
+
 tags_pages:
   cron: "*/15 * * * *"
   class: "TagsWorker"
